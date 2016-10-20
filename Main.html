@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>主页</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="lib/weui.min.css">
+    <link rel="stylesheet" href="css/jquery-weui.css">
+    <link rel="stylesheet" href="css/demos.css">
+</head>
+<body>
+<div class="login-tab">
+    <header class='demos-header'>
+        <h1 class="demos-title">登录</h1>
+    </header>
+
+    <div class="weui_cells weui_cells_form">
+        <div class="weui_cell">
+            <div class="weui_cell_hd"><label class="weui_label">帐号</label></div>
+            <div class="weui_cell_bd weui_cell_primary">
+                <input class="weui_input loginidtxt"  type="text" placeholder="帐号">
+            </div>
+        </div>
+        <div class="weui_cell">
+            <div class="weui_cell_hd"><label class="weui_label">密码</label></div>
+            <div class="weui_cell_bd weui_cell_primary">
+                <input class="weui_input loginpwdtxt" type="password" placeholder="密码">
+            </div>
+        </div>
+    </div>
+    <a href="javascript:;" style="width: 80%;margin-top:50px " class="weui_btn weui_btn_primary loginBtn">登录</a>
+</div>
+<div class="weui_tab" hidden>
+    <div class="weui_tab_bd">
+        <div id="tab1" class="weui_tab_bd_item weui_tab_bd_item_active">
+            <h1 class="doc-head">首页</h1>
+        </div>
+        <div id="tab2" class="weui_tab_bd_item">
+            <header class='demos-header'>
+                <h1 class="demos-title">增加代理</h1>
+            </header>
+            <div class="weui_cells weui_cells_form">
+                <div class="weui_cell">
+                    <div class="weui_cell_hd"><label class="weui_label">代理帐号</label></div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input class="weui_input addidtxt"  type="text" placeholder="帐号">
+                    </div>
+                </div>
+                <div class="weui_cell">
+                    <div class="weui_cell_hd"><label class="weui_label">代理密码</label></div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input class="weui_input addpwdtxt" type="password" placeholder="密码">
+                    </div>
+                </div>
+                <div class="weui_cell">
+                    <div class="weui_cell_hd"><label class="weui_label">代理姓名</label></div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input class="weui_input addnametxt" type="text" placeholder="姓名">
+                    </div>
+                </div>
+            </div>
+            <a href="javascript:;" style="width: 80%;margin-top:50px " class="weui_btn weui_btn_primary addBtn">增加</a>
+        </div>
+        <div id="tab3" class="weui_tab_bd_item">
+            <header class='demos-header'>
+                <h1 class="demos-title">我的</h1>
+            </header>
+            <div class="weui_cells weui_cells_form">
+                <div class="weui_cell">
+                    <div class="weui_cell_hd"><label class="weui_label">帐号</label></div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input class="weui_input ownidtxt"  type="text" disabled >
+                    </div>
+                </div>
+                <div class="weui_cell">
+                    <div class="weui_cell_hd"><label class="weui_label">姓名</label></div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input class="weui_input ownnametxt" type="text" disabled >
+                    </div>
+                </div>
+                <div class="weui_cell">
+                    <div class="weui_cell_hd"><label class="weui_label">4圈房卡</label></div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input class="weui_input own4txt" type="text" value="0张" disabled >
+                    </div>
+                </div>
+                <div class="weui_cell">
+                    <div class="weui_cell_hd"><label class="weui_label">8圈房卡</label></div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input class="weui_input own8txt" type="text" value="0张" disabled >
+                    </div>
+                </div>
+            </div>
+            <a href="javascript:;" style="width: 80%;margin-top:50px " class="weui_btn weui_btn_primary chongkaBtn">充卡</a>
+
+            <div>
+                <div class="weui_panel">
+                    <div class="weui_panel_hd">充卡记录</div>
+                    <div class="weui_panel_bd">
+                        <div class="weui_media_box weui_media_small_appmsg">
+                            <div class="weui_cells">
+                                <div class="weui_cell">
+                                    <div class="weui_cell_bd weui_cell_primary">
+                                        <p>标题文字</p>
+                                    </div>
+                                    <div class="weui_cell_ft">
+                                        说明文字
+                                    </div>
+                                </div>
+                                <div class="weui_cell">
+                                    <div class="weui_cell_bd weui_cell_primary">
+                                        <p>标题文字</p>
+                                    </div>
+                                    <div class="weui_cell_ft">
+                                        说明文字
+                                    </div>
+                                </div>
+                                <div class="weui_cell">
+                                    <div class="weui_cell_bd weui_cell_primary">
+                                        <p>标题文字</p>
+                                    </div>
+                                    <div class="weui_cell_ft">
+                                        说明文字
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div id="tab4" class="weui_tab_bd_item">
+            <header class='demos-header'>
+                <h1 class="demos-title">充卡</h1>
+            </header>
+            <div class="weui_cells weui_cells_form">
+                <div class="weui_cell weui_cell_select">
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <select class="weui_select fangkatype" name="select1">
+                            <option value="roundtype_4">4圈房卡</option>
+                            <option value="roundtype_8">8圈房卡</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="weui_cell">
+                    <div class="weui_cell_hd"><label class="weui_label">数量</label></div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input class="weui_input numtxt" type="number"  >
+                    </div>
+                </div>
+            </div>
+            <a href="javascript:;" style="width: 80%;margin-top:50px " class="weui_btn weui_btn_primary tijiaoBtn">提交</a>
+        </div>
+    </div>
+    <div class="weui_tabbar">
+        <a href="#tab1" class="weui_tabbar_item weui_bar_item_on">
+            <div class="weui_tabbar_icon">
+                <i class="weui_icon_success_circle"></i>
+            </div>
+            <p class="weui_tabbar_label">首页</p>
+        </a>
+        <a href="#tab2" class="weui_tabbar_item tab2"  >
+            <div class="weui_tabbar_icon">
+                <i class="weui_icon_waiting"></i>
+            </div>
+            <p class="weui_tabbar_label">增加代理</p>
+        </a>
+        <a href="#tab3"  class="weui_tabbar_item tab3">
+            <div class="weui_tabbar_icon">
+                <i class="weui_icon_info_circle"></i>
+            </div>
+            <p class="weui_tabbar_label">我</p>
+        </a>
+        <a href="#tab4"  class="weui_tabbar_item tab4" >
+            <div class="weui_tabbar_icon">
+                <i class="weui_icon_info_circle"></i>
+            </div>
+            <p class="weui_tabbar_label">充卡</p>
+        </a>
+    </div>
+</div>
+<script src="lib/jquery-2.1.4.js"></script>
+<script src="lib/fastclick.js"></script>
+<script>
+    $(function() {
+        FastClick.attach(document.body);
+    });
+</script>
+<script src="js/jquery-weui.js"></script>
+<script>
+    var httpurl="http://180.76.173.116:8080/majiang/";
+    var token="";
+    var user;
+    $(function () {
+        $(".tab4").hide();
+        //登录
+        $(".loginBtn").click(function () {
+            $.showLoading("正在登录...");
+            $.ajax({ type: "post",
+                url:httpurl+"admin/login",
+                data:"id="+$(".loginidtxt").val()+"&pwd="+$(".loginpwdtxt").val(),
+                success:function(info){
+                    $.hideLoading();
+                    if(info.code == "000000")
+                    {
+                        token=info.token;
+                        user=info.user;
+                        $.toptip("登录成功！", 'success');
+                        $(".login-tab").hide();
+                        $(".weui_tab").show();
+                        if(user.groups!="s")
+                            $(".tab2").remove();
+                        $(".ownidtxt").val(user.id);
+                        $(".ownnametxt").val(user.name);
+                        console.log(user);
+                        $(".own4txt").val(user.id);
+                        $(".own8txt").val(user.id);
+                        $.ajax({ type: "post",
+                            url:httpurl+"admin/getCardList",
+                            data:"status=0"+"&token="+token,
+                            success:function(info){
+                                console.log("list");
+                                console.log(info);
+                            },
+                            error: function () {   $.hideLoading();
+                                $.toptip('连接不上服务器', 'error'); }
+                        });
+
+                    }else if(info.code == "000002"){
+                        $.toptip('帐号密码错误', 'error');
+                    }else
+                    {
+                        $.toptip(info.msg, 'error');
+                    }
+                },
+                error: function () {
+                    $.hideLoading();
+                    $.toptip('连接不上服务器', 'error');
+                }
+            });
+        })
+        //增加代理
+        $(".addBtn").click(function () {
+            $.showLoading();
+            $.ajax({ type: "post",
+                url:httpurl+"admin/add",
+                data:"id="+$(".addidtxt").val()+"&pwd="+$(".addpwdtxt").val()+"&name="+$(".addnametxt").val()+"&token="+token,
+                success:function(info){
+                    $.hideLoading();
+                    if(info.code == "000000")
+                    {
+                        $.toptip("添加成功！", 'success');
+                        $(".addidtxt").val("");
+                        $(".addpwdtxt").val("");
+                    }else
+                    {
+                        $.toptip(info.msg, 'error');
+                    }
+                },
+                error: function () {   $.hideLoading();
+                    $.toptip('连接不上服务器', 'error'); }
+            });
+        })
+        //充卡界面
+        $(".chongkaBtn").click(function () {
+            $(".tab4").click();
+        })
+        $(".tijiaoBtn").click(function () {
+            if($(".numtxt").val()=="")
+            {
+                $.toptip("数量不能为空", 'error');
+                return;
+            }
+            $.showLoading();
+            $.ajax({ type: "post",
+                url:httpurl+"admin/recv",
+                data:"agentid="+user.id+"&num="+$(".numtxt").val()+"&type="+$(".fangkatype").val()+"&token="+token,
+                success:function(info){
+                    $.hideLoading();
+                    if(info.code == "000000")
+                    {
+                        $.toptip("充值成功！", 'success');
+                        $(".numtxt").val("");
+                        $(".tab3").click();
+                    }else
+                    {
+                        $.toptip(info.msg, 'error');
+                    }
+                },
+                error: function () {   $.hideLoading();
+                    $.toptip('连接不上服务器', 'error'); }
+            });
+        })
+
+    })
+
+
+//    admin/login?id=aaa&pwd=aaa
+//
+//            admin/add?id=aaa1&pwd=aaa1&token
+//                    添加代理
+//
+//    admin/recv?agentid=aaa&num=5&type=roundtype_4
+//            回调
+//
+//
+//    admin/usecard?token=xxxx&id=xxxxxxxxxxxxx
+//            给用户充卡 id卡号  userid用户
+//
+//    admin/getCardList?token=xxxx
+//            条件可选 page 、 rows 、 id卡号  、type卡类型 、 status状态1可用 0已用、 agentid代理人  userid使用卡的用户  、时间范围 beginTime endTime
+</script>
+</body>
+</html>
