@@ -34,7 +34,29 @@
 <div class="weui_tab" hidden>
     <div class="weui_tab_bd">
         <div id="tab1" class="weui_tab_bd_item weui_tab_bd_item_active">
-            <h1 class="doc-head">首页</h1>
+            <div class="weui_cells weui_cells_form">
+                <div class="weui_cell">
+                    <div class="weui_cell_hd"><label class="weui_label">玩家id</label></div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input class="weui_input useridtxt"  type="number" placeholder="玩家id">
+                    </div>
+                </div>
+                <div class="weui_cell">
+                    <div class="weui_cell_hd"><label class="weui_label">充卡数量</label></div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input class="weui_input usernumtxt" type="number" placeholder="充卡数量">
+                    </div>
+                </div>
+                <div class="weui_cell weui_cell_select">
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <select class="weui_select usertype">
+                            <option value="roundtype_4">4圈房卡</option>
+                            <option value="roundtype_8">8圈房卡</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <a href="javascript:;" style="width: 80%;margin-top:50px " class="weui_btn weui_btn_primary userchongBtn">充卡</a>
         </div>
         <div id="tab2" class="weui_tab_bd_item">
             <header class='demos-header'>
@@ -267,6 +289,7 @@
         $(".chongkaBtn").click(function () {
             $(".tab4").click();
         })
+        //充卡
         $(".tijiaoBtn").click(function () {
             if($(".numtxt").val()=="")
             {
@@ -293,7 +316,33 @@
                     $.toptip('连接不上服务器', 'error'); }
             });
         })
-
+        //玩家充卡
+        $(".userchongBtn").click(function () {
+            if($(".useridtxt").val()==""||$(".usernumtxt").val()=="")
+            {
+                $.toptip("玩家id和数量不能为空", 'error');
+                return;
+            }
+            $.showLoading();
+            $.ajax({ type: "post",
+                url:httpurl+"admin/usecard",
+                data:"id="+$(".useridtxt").val()+"&num="+$(".usernumtxt").val()+"&type="+$(".usertype").val()+"&token="+token,
+                success:function(info){
+                    $.hideLoading();
+                    if(info.code == "000000")
+                    {
+                        $.toptip("充值成功！", 'success');
+                        $(".useridtxt").val("");
+                        $(".usernumtxt").val("");
+                    }else
+                    {
+                        $.toptip(info.msg, 'error');
+                    }
+                },
+                error: function () {   $.hideLoading();
+                    $.toptip('连接不上服务器', 'error'); }
+            });
+        })
     })
 
 
