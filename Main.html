@@ -8,8 +8,13 @@
     <link rel="stylesheet" href="lib/weui.min.css">
     <link rel="stylesheet" href="css/jquery-weui.css">
     <link rel="stylesheet" href="css/demos.css">
+    <style>
+        .suosou {
+            margin-left: 10px;line-height: 28px;white-space: nowrap;color: #09BB07;
+        }
+    </style>
 </head>
-<body>
+<body style="background-color: #f2f2f2 ">
 <div class="login-tab">
     <header class='demos-header'>
         <h1 class="demos-title">登录</h1>
@@ -34,6 +39,20 @@
 <div class="weui_tab" hidden>
     <div class="weui_tab_bd">
         <div id="tab1" class="weui_tab_bd_item weui_tab_bd_item_active">
+            <div class="weui_search_bar" id="search_bar">
+                <form class="weui_search_outer">
+                    <div class="weui_search_inner">
+                        <i class="weui_icon_search"></i>
+                        <input type="search" class="weui_search_input" id="search_input" placeholder="搜索玩家" required/>
+                        <a href="javascript:" class="weui_icon_clear" id="search_clear"></a>
+                    </div>
+                    <label for="search_input" class="weui_search_text" id="search_text">
+                        <i class="weui_icon_search"></i>
+                        <span>搜索玩家</span>
+                    </label>
+                </form>
+                <a href="javascript:" class="suosou">搜索</a>
+            </div>
             <div class="weui_cells weui_cells_form">
                 <div class="weui_cell">
                     <div class="weui_cell_hd"><label class="weui_label">玩家id</label></div>
@@ -56,7 +75,23 @@
                     </div>
                 </div>
             </div>
-            <a href="javascript:;" style="width: 80%;margin-top:50px " class="weui_btn weui_btn_primary userchongBtn">充卡</a>
+            <a href="javascript:;" style="width: 80%;margin:20px 10% " class="weui_btn weui_btn_primary userchongBtn">充卡</a>
+            <div>
+                <div class="weui_panel">
+                    <div class="weui_panel_hd">玩家的充卡记录</div>
+                    <div class="weui_panel_bd">
+                        <div class="weui_media_box weui_media_small_appmsg">
+                            <div class="weui_cells userlists">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="weui-infinite-scroll userlistscroll">
+                <div class="infinite-preloader"></div><!-- 菊花 -->
+                正在加载... <!-- 文案，可以自行修改 -->
+            </div>
         </div>
         <div id="tab2" class="weui_tab_bd_item">
             <header class='demos-header'>
@@ -85,9 +120,6 @@
             <a href="javascript:;" style="width: 80%;margin-top:50px " class="weui_btn weui_btn_primary addBtn">增加</a>
         </div>
         <div id="tab3" class="weui_tab_bd_item">
-            <header class='demos-header'>
-                <h1 class="demos-title">我的</h1>
-            </header>
             <div class="weui_cells weui_cells_form">
                 <div class="weui_cell">
                     <div class="weui_cell_hd"><label class="weui_label">帐号</label></div>
@@ -114,43 +146,23 @@
                     </div>
                 </div>
             </div>
-            <a href="javascript:;" style="width: 80%;margin-top:50px " class="weui_btn weui_btn_primary chongkaBtn">充卡</a>
+            <a href="javascript:;" style="width: 80%;margin:20px 10% " class="weui_btn weui_btn_primary chongkaBtn">为玩家充卡</a>
 
             <div>
                 <div class="weui_panel">
                     <div class="weui_panel_hd">充卡记录</div>
                     <div class="weui_panel_bd">
                         <div class="weui_media_box weui_media_small_appmsg">
-                            <div class="weui_cells">
-                                <div class="weui_cell">
-                                    <div class="weui_cell_bd weui_cell_primary">
-                                        <p>标题文字</p>
-                                    </div>
-                                    <div class="weui_cell_ft">
-                                        说明文字
-                                    </div>
-                                </div>
-                                <div class="weui_cell">
-                                    <div class="weui_cell_bd weui_cell_primary">
-                                        <p>标题文字</p>
-                                    </div>
-                                    <div class="weui_cell_ft">
-                                        说明文字
-                                    </div>
-                                </div>
-                                <div class="weui_cell">
-                                    <div class="weui_cell_bd weui_cell_primary">
-                                        <p>标题文字</p>
-                                    </div>
-                                    <div class="weui_cell_ft">
-                                        说明文字
-                                    </div>
-                                </div>
+                            <div class="weui_cells owmlists">
+
                             </div>
                         </div>
                     </div>
                 </div>
-
+            </div>
+            <div class="weui-infinite-scroll owmlistscroll">
+                <div class="infinite-preloader"></div><!-- 菊花 -->
+                正在加载... <!-- 文案，可以自行修改 -->
             </div>
         </div>
         <div id="tab4" class="weui_tab_bd_item">
@@ -215,6 +227,8 @@
     var httpurl="http://180.76.173.116:8080/majiang/";
     var token="";
     var user;
+    var owmlist;
+    var userlist;
     $(function () {
         $(".tab4").hide();
         //登录
@@ -229,7 +243,7 @@
                     {
                         token=info.token;
                         user=info.user;
-                        $.toptip("登录成功！", 'success');
+                        $.toast("登录成功！", 'success');
                         $(".login-tab").hide();
                         $(".weui_tab").show();
                         if(user.groups!="s")
@@ -239,12 +253,33 @@
                         console.log(user);
                         $(".own4txt").val(user.id);
                         $(".own8txt").val(user.id);
+                        $.showLoading("正在加载数据...");
                         $.ajax({ type: "post",
                             url:httpurl+"admin/getCardList",
-                            data:"status=0"+"&token="+token,
+                            data:"status="+"&token="+token+"&rows=1000",
                             success:function(info){
+                                $.hideLoading();
                                 console.log("list");
                                 console.log(info);
+                                if(info.rows)
+                                {
+                                    if(info.rows.length>0)
+                                    {
+                                        k=info.rows.length;
+                                        owmlist=[];
+                                        userlist=[];
+                                        for(var i=0;i<k;i++)
+                                        {
+                                            if(info.rows[i].bizid)
+                                                userlist.push(info.rows[i]);
+                                            else
+                                                owmlist.push(info.rows[i]);
+                                        }
+                                    }
+                                }
+                                console.log(userlist);
+                                console.log(owmlist);
+                                setList();
                             },
                             error: function () {   $.hideLoading();
                                 $.toptip('连接不上服务器', 'error'); }
@@ -273,7 +308,7 @@
                     $.hideLoading();
                     if(info.code == "000000")
                     {
-                        $.toptip("添加成功！", 'success');
+                        $.toast("添加成功！", 'success');
                         $(".addidtxt").val("");
                         $(".addpwdtxt").val("");
                     }else
@@ -304,7 +339,7 @@
                     $.hideLoading();
                     if(info.code == "000000")
                     {
-                        $.toptip("充值成功！", 'success');
+                        $.toast("成功！", 'success');
                         $(".numtxt").val("");
                         $(".tab3").click();
                     }else
@@ -323,28 +358,110 @@
                 $.toptip("玩家id和数量不能为空", 'error');
                 return;
             }
-            $.showLoading();
-            $.ajax({ type: "post",
-                url:httpurl+"admin/usecard",
-                data:"id="+$(".useridtxt").val()+"&num="+$(".usernumtxt").val()+"&type="+$(".usertype").val()+"&token="+token,
-                success:function(info){
-                    $.hideLoading();
-                    if(info.code == "000000")
-                    {
-                        $.toptip("充值成功！", 'success');
-                        $(".useridtxt").val("");
-                        $(".usernumtxt").val("");
-                    }else
-                    {
-                        $.toptip(info.msg, 'error');
-                    }
+            $.confirm({
+                title: '提示',
+                text: '确定帮玩家'+$(".useridtxt").val()+"充卡?",
+                onOK: function () {
+                    $.showLoading();
+                    $.ajax({ type: "post",
+                        url:httpurl+"admin/usecard",
+                        data:"bizid="+$(".useridtxt").val()+"&num="+$(".usernumtxt").val()+"&type="+$(".usertype").val()+"&token="+token,
+                        success:function(info){
+                            $.hideLoading();
+                            if(info.code == "000000")
+                            {
+                                $.toast("成功！", 'success');
+                                $(".useridtxt").val("");
+                                $(".usernumtxt").val("");
+                            }else
+                            {
+                                $.toast(info.msg, 'error');
+                                $.toptip(info.msg, 'error');
+                            }
+                        },
+                        error: function () {   $.hideLoading();
+                            $.toptip('连接不上服务器', 'error'); }
+                    });
                 },
-                error: function () {   $.hideLoading();
-                    $.toptip('连接不上服务器', 'error'); }
+                onCancel: function () {
+                }
+            });
+
+        })
+        //搜索
+        $(".suosou").click(function () {
+            $.alert({
+                title: '玩家：2009',
+                text: '昵称：dsadas   ; 十大：dasdsa   ;  十大：dasdsa   ;  ',
+                onOK: function () {
+                    //点击确认
+                }
             });
         })
     })
+    function setList(){
+        $(".owmlists").children().remove();
+        $(".userlists").children().remove();
+        var k=owmlist.length>10?10:owmlist.length;
+        for(var i=0;i<k;i++)
+        {
+            var leixing=owmlist[i].type=="roundtype_4"?"四圈房卡":"八圈房卡"
+            var div='<div class="weui_cell"><div class="weui_cell_bd weui_cell_primary"><p>数量:'+owmlist[i].num+'</p>'+
+                    '  <p>类型:'+leixing+'</p>'+
+                '</div><div class="weui_cell_ft">'+owmlist[i].createTime+'</div></div>'
+            $(".owmlists").append(div);
+        }
+        if(k==10)
+        {
+            $("#tab3").infinite(10).on("infinite", function() {
+                if(k>=owmlist.length) {
+                    $("#tab3").destroyInfinite();
+                    $(".owmlistscroll").remove();
+                    return;
+                }
+                var leixing=owmlist[k].type=="roundtype_4"?"四圈房卡":"八圈房卡"
+                var div='<div class="weui_cell"><div class="weui_cell_bd weui_cell_primary"><p>数量:'+owmlist[k].num+'</p>'+
+                        '  <p>类型:'+leixing+'</p>'+
+                        '</div><div class="weui_cell_ft">'+owmlist[k].createTime+'</div></div>'
+                $(".owmlists").append(div);
+                k++;
+            });
+        }else
+        {
+            $(".owmlistscroll").remove();
+        }
 
+        var y=userlist.length>10?10:userlist.length;
+        for(var i=0;i<y;i++)
+        {
+            var leixing=userlist[i].type=="roundtype_4"?"四圈房卡":"八圈房卡"
+            var div='<div class="weui_cell"><div class="weui_cell_bd weui_cell_primary"><p>玩家id:'+userlist[i].bizid+'</p><p>数量:'+userlist[i].num+'</p>'+
+                    '  <p>类型:'+leixing+'</p>'+
+                    '</div><div class="weui_cell_ft">'+userlist[i].createTime+'</div></div>';
+
+            $(".userlists").append(div);
+        }
+        if(y==10)
+        {
+            $("#tab1").infinite(10).on("infinite", function() {
+                if(y>=userlist.length) {
+                    $("#tab1").destroyInfinite();
+                    $(".userlistscroll").remove();
+                    return;
+                }
+                var leixing=userlist[y].type=="roundtype_4"?"四圈房卡":"八圈房卡"
+                var div='<div class="weui_cell"><div class="weui_cell_bd weui_cell_primary"><p>玩家id:'+userlist[y].bizid+'</p><p>数量:'+userlist[y].num+'</p>'+
+                        '  <p>类型:'+leixing+'</p>'+
+                        '</div><div class="weui_cell_ft">'+userlist[y].createTime+'</div></div>';
+                $(".userlists").append(div);
+                y++;
+            });
+        }else
+        {
+            $(".userlistscroll").remove();
+        }
+
+    }
 
 //    admin/login?id=aaa&pwd=aaa
 //
