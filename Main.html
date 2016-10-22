@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <link rel="stylesheet" href="lib/weui.min.css">
-    <link rel="stylesheet" href="css/jquery-weui.css">
+    <link rel="stylesheet" href="css/jquery-weui.min.css">
     <link rel="stylesheet" href="css/demos.css">
     <style>
         .suosou {
@@ -19,7 +19,6 @@
     <header class='demos-header'>
         <h1 class="demos-title">登录</h1>
     </header>
-
     <div class="weui_cells weui_cells_form">
         <div class="weui_cell">
             <div class="weui_cell_hd"><label class="weui_label">帐号</label></div>
@@ -43,7 +42,7 @@
                 <form class="weui_search_outer">
                     <div class="weui_search_inner">
                         <i class="weui_icon_search"></i>
-                        <input type="search" class="weui_search_input" id="search_input" placeholder="搜索玩家" required/>
+                        <input type="search" class="weui_search_input searchbizidtxt" id="search_input" placeholder="搜索玩家" required/>
                         <a href="javascript:" class="weui_icon_clear" id="search_clear"></a>
                     </div>
                     <label for="search_input" class="weui_search_text" id="search_text">
@@ -86,7 +85,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
             <div class="weui-infinite-scroll userlistscroll">
                 <div class="infinite-preloader"></div><!-- 菊花 -->
@@ -134,27 +132,25 @@
                     </div>
                 </div>
                 <div class="weui_cell">
-                    <div class="weui_cell_hd"><label class="weui_label">4圈房卡</label></div>
+                    <div class="weui_cell_hd"><label class="weui_label">4圈房卡(张)</label></div>
                     <div class="weui_cell_bd weui_cell_primary">
-                        <input class="weui_input own4txt" type="text" value="0张" disabled >
+                        <input class="weui_input own4txt" type="text" value="0" disabled >
                     </div>
                 </div>
                 <div class="weui_cell">
-                    <div class="weui_cell_hd"><label class="weui_label">8圈房卡</label></div>
+                    <div class="weui_cell_hd"><label class="weui_label">8圈房卡(张)</label></div>
                     <div class="weui_cell_bd weui_cell_primary">
-                        <input class="weui_input own8txt" type="text" value="0张" disabled >
+                        <input class="weui_input own8txt" type="text" value="0" disabled >
                     </div>
                 </div>
             </div>
             <a href="javascript:;" style="width: 80%;margin:20px 10% " class="weui_btn weui_btn_primary chongkaBtn">充卡</a>
-
             <div>
                 <div class="weui_panel">
                     <div class="weui_panel_hd">充卡记录</div>
                     <div class="weui_panel_bd">
                         <div class="weui_media_box weui_media_small_appmsg">
                             <div class="weui_cells owmlists">
-
                             </div>
                         </div>
                     </div>
@@ -227,6 +223,7 @@
     var httpurl="http://180.76.173.116:8080/majiang/";
     var token="";
     var user;
+    var goods;
     var owmlist=[];
     var userlist=[];
     $(function () {
@@ -243,6 +240,7 @@
                     {
                         token=info.token;
                         user=info.user;
+                        goods=info.goods;
                         $.toast("登录成功！", 'success');
                         $(".login-tab").hide();
                         $(".weui_tab").show();
@@ -250,17 +248,32 @@
                             $(".tab2").remove();
                         $(".ownidtxt").val(user.id);
                         $(".ownnametxt").val(user.name);
-                        console.log(user);
-                        $(".own4txt").val(user.id);
-                        $(".own8txt").val(user.id);
+                        if(goods.length)
+                        {
+                            if(goods[0].type=="roundtype_4")
+                            {
+                                $(".own4txt").val(goods[0].value);
+                                if(goods.length>1)
+                                    $(".own8txt").val(goods[1].value);
+                                else
+                                    $(".own8txt").val("0");
+                            }else
+                            {
+                                $(".own8txt").val(goods[0].value);
+                                if(goods.length>1)
+                                    $(".own4txt").val(goods[1].value);
+                                else
+                                    $(".own4txt").val("0");
+                            }
+                        }
+                       
+
                         $.showLoading("正在加载数据...");
                         $.ajax({ type: "post",
                             url:httpurl+"admin/getCardList",
                             data:"status="+"&token="+token+"&rows=1000",
                             success:function(info){
                                 $.hideLoading();
-                                console.log("list");
-                                console.log(info);
                                 if(info.rows)
                                 {
                                     if(info.rows.length>0)
@@ -277,14 +290,11 @@
                                         }
                                     }
                                 }
-                                console.log(userlist);
-                                console.log(owmlist);
                                 setList();
                             },
                             error: function () {   $.hideLoading();
                                 $.toptip('连接不上服务器', 'error'); }
                         });
-
                     }else if(info.code == "000002"){
                         $.toptip('帐号密码错误', 'error');
                     }else
@@ -341,6 +351,8 @@
                     if(info.code == "000000")
                     {
                         $.toast("成功！", 'success');
+                        addList($(".fangkatype").val(),$(".numtxt").val());
+                        addcard($(".fangkatype").val(),$(".numtxt").val());
                         $(".numtxt").val("");
                         $(".tab3").click();
                     }else
@@ -372,11 +384,13 @@
                             if(info.code == "000000")
                             {
                                 $.toast("成功！", 'success');
+                                adduserList($(".usertype").val(),$(".usernumtxt").val(),$(".useridtxt").val());
+                                delcard($(".usertype").val(),$(".usernumtxt").val());
                                 $(".useridtxt").val("");
                                 $(".usernumtxt").val("");
                             }else
                             {
-                                $.toast(info.msg, 'error');
+                                $.toast(info.msg, 'forbidden');
                                 $.toptip(info.msg, 'error');
                             }
                         },
@@ -387,17 +401,43 @@
                 onCancel: function () {
                 }
             });
-
         })
         //搜索
         $(".suosou").click(function () {
-            $.alert({
-                title: '玩家：2009',
-                text: '昵称：dsadas   ; 十大：dasdsa   ;  十大：dasdsa   ;  ',
-                onOK: function () {
-                    //点击确认
-                }
+            $.ajax({ type: "post",
+                    url:httpurl+"admin/getUserList",
+                    data:"token="+token+"&bizid="+$(".searchbizidtxt").val(),
+                    success:function(info){
+                        console.log(info);
+                        if(info.rows.length==0){
+                            $.toptip('玩家不存在', 'error');
+                            $.toast('玩家不存在', 'forbidden');
+                            return;
+                        }
+                        player=info.rows[0];
+                        var fangkaxinxi="";
+                        for (var i = 0; i <player.goods.length; i++) {
+                            if(player.goods[i].type=="roundtype_4")
+                            {
+                                fangkaxinxi+="4圈房卡："+player.goods[i].value+"张          ;";
+                            }
+                             if(player.goods[i].type=="roundtype_8")
+                            {
+                                fangkaxinxi+="8圈房卡："+player.goods[i].value+"张          ;";
+                            }
+                        }
+                        $.alert({
+                            title: '玩家：'+player.name,
+                            text: 'id：'+player.bizid+'   ;    '+fangkaxinxi,
+                            onOK: function () {
+                                //点击确认
+                            }
+                        });
+                    },
+                    error: function () {   $.hideLoading();
+                        $.toptip('连接不上服务器', 'error'); }
             });
+           
         })
     })
     function setList(){
@@ -431,7 +471,6 @@
         {
             $(".owmlistscroll").remove();
         }
-
         var y=userlist.length>10?10:userlist.length;
         for(var i=0;i<y;i++)
         {
@@ -439,7 +478,6 @@
             var div='<div class="weui_cell"><div class="weui_cell_bd weui_cell_primary"><p>玩家id:'+userlist[i].bizid+'</p><p>数量:'+userlist[i].num+'</p>'+
                     '  <p>类型:'+leixing+'</p>'+
                     '</div><div class="weui_cell_ft">'+userlist[i].createTime+'</div></div>';
-
             $(".userlists").append(div);
         }
         if(y==10)
@@ -461,9 +499,81 @@
         {
             $(".userlistscroll").remove();
         }
-
     }
+    function addList(type,num){
+         var leixing=type=="roundtype_4"?"四圈房卡":"八圈房卡"
+            var div='<div class="weui_cell"><div class="weui_cell_bd weui_cell_primary"><p>数量:'+num+'</p>'+
+                    '  <p>类型:'+leixing+'</p>'+
+                '</div><div class="weui_cell_ft">'+CurentTime()+'</div></div>'
+            $(".owmlists").prepend(div);
+    }
+    function adduserList(type,num,bizid){
+        var leixing=type=="roundtype_4"?"四圈房卡":"八圈房卡"
+        var div='<div class="weui_cell"><div class="weui_cell_bd weui_cell_primary"><p>玩家id:'+bizid+'</p><p>数量:'+num+'</p>'+
+                '  <p>类型:'+leixing+'</p>'+
+                '</div><div class="weui_cell_ft">'+CurentTime()+'</div></div>';
+        $(".userlists").prepend(div);
+    }
+    function addcard(type,num)
+    {
+        if(type=="roundtype_4")
+        {
+            var sunm=Number($(".own4txt").val())+Number(num);
+            $(".own4txt").val(sunm);
+        }else{
+             var sunm=Number($(".own8txt").val())+Number(num);
+            $(".own8txt").val(sunm);
+        }
+    }
+    function delcard(type,num)
+    {
+        if(type=="roundtype_4")
+        {
+            var sunm=Number($(".own4txt").val())-Number(num);
+            $(".own4txt").val(sunm);
+        }else{
+             var sunm=Number($(".own8txt").val())-Number(num);
+            $(".own8txt").val(sunm);
+        }
+    }
+    function CurentTime()
+    { 
+        var now = new Date();
+       
+        var year = now.getFullYear();       //年
+        var month = now.getMonth() + 1;     //月
+        var day = now.getDate();            //日
+       
+        var hh = now.getHours();            //时
+        var mm = now.getMinutes();          //分
+        var ss = now.getSeconds();          //miao
+       
+        var clock = year + "-";
+       
+        if(month < 10)
+            clock += "0";
+       
+        clock += month + "-";
+       
+        if(day < 10)
+            clock += "0";
+           
+        clock += day + " ";
+       
+        if(hh < 10)
+            clock += "0";
+           
+        clock += hh + ":";
 
+        if (mm < 10) 
+            clock += '0'; 
+        clock += mm+ ":"; 
+
+         if (ss < 10) 
+            clock += '0'; 
+        clock += ss; 
+        return(clock); 
+    } 
 //    admin/login?id=aaa&pwd=aaa
 //
 //            admin/add?id=aaa1&pwd=aaa1&token
@@ -471,10 +581,13 @@
 //
 //    admin/recv?agentid=aaa&num=5&type=roundtype_4
 //            回调
-//
+//http://180.76.173.116:8080/majiang/admin/getUserList?token=aaa1477109345281
+
+// 啊炮 2016/10/22 12:11:21
+// http://180.76.173.116:8080/majiang/admin/queryAgent?token=aaa1477109345281
 //
 //    admin/usecard?token=xxxx&bizid=xxxxxxxxxxxxx&num=5&type=roundtype_4
-//            给用户充卡 id卡号  userid用户
+//            给用户充卡 id卡号  userid用户)
 //
 //    admin/getCardList?token=xxxx
 //            条件可选 page 、 rows 、 id卡号  、type卡类型 、 status状态1可用 0已用、 agentid代理人  userid使用卡的用户  、时间范围 beginTime endTime测试
