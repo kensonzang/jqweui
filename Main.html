@@ -92,46 +92,94 @@
             </div>
         </div>
         <div id="tab2" class="weui_tab_bd_item">
-            <h1 class="main-title">增加代理</h1>
-            <div class="weui_cells weui_cells_form">
-                <div class="weui_cell">
-                    <div class="weui_cell_hd"><label class="weui_label">帐号</label></div>
-                    <div class="weui_cell_bd weui_cell_primary">
-                        <input class="weui_input addidtxt"  type="text" placeholder="帐号">
+            <h1 class="main-title">代理管理</h1>
+             <div class="demos-cneter">
+                <div class="adddailiBtn">
+                    <a href="javascript:;" class="weui_btn weui_btn_primary weui_btn_mini ">增加代理</a>       
+                </div>
+                <div hidden class="dailiguanliBtn">
+                    <a href="javascript:;" class="weui_btn weui_btn_primary weui_btn_mini " >代理管理</a>         
+                </div>
+            </div>
+            <div>
+                <div class="weui_panel dailiguanlidiv">
+                    <div class="weui_panel">
+                        <div class="weui_panel_hd">代理列表</div>
+                        <div class="weui_panel_bd">
+                            <div class="weui_media_box weui_media_small_appmsg">
+                                <div class="weui_cells">
+                                    <div class="weui_cell">
+                                        <div class="weui_cell_bd weui_cell_primary">
+                                          <p>名字</p>
+                                        </div>
+                                        <div class="weui_cell_ft">
+                                           <a href="javascript:;" class="weui_btn weui_btn_mini weui_btn_warn">冻结</a>
+                                        </div>
+                                    </div>
+                                     <div class="weui_cell">
+                                        <div class="weui_cell_bd weui_cell_primary">
+                                          <p>名字</p>
+                                        </div>
+                                        <div class="weui_cell_ft">
+                                           <a href="javascript:;" class="weui_btn weui_btn_mini weui_btn_primary">解冻</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="weui_cell">
-                    <div class="weui_cell_hd"><label class="weui_label">密码</label></div>
-                    <div class="weui_cell_bd weui_cell_primary">
-                        <input class="weui_input addpwdtxt" type="password" placeholder="密码">
-                    </div>
-                </div>
-                <div class="weui_cell">
-                    <div class="weui_cell_hd"><label class="weui_label">姓名</label></div>
-                    <div class="weui_cell_bd weui_cell_primary">
-                        <input class="weui_input addnametxt" type="text" placeholder="姓名">
-                    </div>
-                </div>
-                <div class="weui_cell">
-                    <div class="weui_cell_hd"><label class="weui_label">电话</label></div>
-                    <div class="weui_cell_bd weui_cell_primary">
-                        <input class="weui_input addteltxt" type="text" placeholder="电话">
-                    </div>
-                </div>
-                 <div class="weui_cell">
-                    <div class="weui_cell_hd"><label class="weui_label">银行帐号</label></div>
-                    <div class="weui_cell_bd weui_cell_primary">
-                        <input class="weui_input addbanktxt" type="text" placeholder="银行帐号">
-                    </div>
-                </div>
-                 <div class="weui_cell">
-                    <div class="weui_cell_hd"><label class="weui_label">微信号</label></div>
-                    <div class="weui_cell_bd weui_cell_primary">
-                        <input class="weui_input addwxtxt" type="text" placeholder="微信号">
+                <div class="weui_panel adddailidiv" hidden="">
+                    <div class="weui_panel">
+                        <div class="weui_panel_hd">增加代理</div>
+                        <div class="weui_panel_bd">
+                                <div class="weui_cell">
+                                    <div class="weui_cell_hd">
+                                        <label class="weui_label">帐号</label>
+                                    </div>
+                                    <div class="weui_cell_bd weui_cell_primary">
+                                        <input class="weui_input addidtxt"  type="text" placeholder="帐号"></div>
+                                </div>
+                                <div class="weui_cell">
+                                    <div class="weui_cell_hd">
+                                        <label class="weui_label">密码</label>
+                                    </div>
+                                    <div class="weui_cell_bd weui_cell_primary">
+                                        <input class="weui_input addpwdtxt" type="password" placeholder="密码"></div>
+                                </div>
+                                <div class="weui_cell">
+                                    <div class="weui_cell_hd">
+                                        <label class="weui_label">姓名</label>
+                                    </div>
+                                    <div class="weui_cell_bd weui_cell_primary">
+                                        <input class="weui_input addnametxt" type="text" placeholder="姓名"></div>
+                                </div>
+                                <div class="weui_cell">
+                                    <div class="weui_cell_hd">
+                                        <label class="weui_label">电话</label>
+                                    </div>
+                                    <div class="weui_cell_bd weui_cell_primary">
+                                        <input class="weui_input addteltxt" type="text" placeholder="电话"></div>
+                                </div>
+                                <div class="weui_cell">
+                                    <div class="weui_cell_hd">
+                                        <label class="weui_label">银行帐号</label>
+                                    </div>
+                                    <div class="weui_cell_bd weui_cell_primary">
+                                        <input class="weui_input addbanktxt" type="text" placeholder="银行帐号"></div>
+                                </div>
+                                <div class="weui_cell">
+                                    <div class="weui_cell_hd">
+                                        <label class="weui_label">微信号</label>
+                                    </div>
+                                    <div class="weui_cell_bd weui_cell_primary">
+                                        <input class="weui_input addwxtxt" type="text" placeholder="微信号"></div>
+                                </div>
+                            <a href="javascript:;" style="width: 80%;margin:20px auto" class="weui_btn weui_btn_primary addBtn">增加</a>
+                        </div>
                     </div>
                 </div>
             </div>
-            <a href="javascript:;" style="width: 80%;margin-top:50px " class="weui_btn weui_btn_primary addBtn">增加</a>
         </div>
         <div id="tab3" class="weui_tab_bd_item">
             <h1 class="main-title">我的</h1> 
@@ -350,7 +398,7 @@
             <div class="weui_tabbar_icon">
                 <i class="weui_icon_waiting"></i>
             </div>
-            <p class="weui_tabbar_label">增加代理</p>
+            <p class="weui_tabbar_label">代理管理</p>
         </a>
         
         <a href="#tab4"  class="weui_tabbar_item tab4" >
@@ -396,6 +444,18 @@
     var userlist=[];
     $(function () {
         $(".tab4").hide();
+         $(".adddailiBtn").click(function () {
+            $(".dailiguanliBtn").show();
+            $(".adddailiBtn").hide();
+            $(".adddailidiv").show();
+            $(".dailiguanlidiv").hide();
+        })
+         $(".dailiguanliBtn").click(function () {
+            $(".dailiguanliBtn").hide();
+            $(".adddailiBtn").show();
+            $(".adddailidiv").hide();
+            $(".dailiguanlidiv").show();
+        })
         $(".goukapaihangBtn").click(function () {
             $(".wanjiaguanliBtn").show();
             $(".goukapaihangBtn").hide();
@@ -408,7 +468,7 @@
             $(".goukapaihangdiv").hide();
             $(".wanjiaguanlidiv").show();
         })
-          $(".benyueBtn").click(function () {
+        $(".benyueBtn").click(function () {
             $(".benyuediv").show();
             $(".jinridiv").hide();
             $(".jinriBtn").show();
