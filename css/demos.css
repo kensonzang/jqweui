@@ -2,6 +2,19 @@ body, html {
   height: 100%;
   -webkit-tap-highlight-color: transparent;
 }
+.own8txt {
+  color: red;
+}
+.own4txt {
+  color: red;
+}
+.main-title {
+  text-align: center;
+  font-size: 24px;
+  color: #3cc51f;
+  font-weight: 400;
+  margin: 10px 15%;
+}
 .demos-title {
   text-align: center;
   font-size: 34px;
@@ -31,7 +44,10 @@ body, html {
   font-weight: 400;
   margin: 0 15%;
 }
-
+.demos-cneter {
+  text-align: center;
+  color: #888;
+}
 footer {
   text-align: center;
   font-size: 14px;
