@@ -93,7 +93,7 @@
         </div>
         <div id="tab2" class="weui_tab_bd_item">
             <h1 class="main-title">代理管理</h1>
-             <div class="demos-cneter">
+            <div class="demos-cneter">
                 <div class="adddailiBtn">
                     <a href="javascript:;" class="weui_btn weui_btn_primary weui_btn_mini ">增加代理</a>       
                 </div>
@@ -107,23 +107,8 @@
                         <div class="weui_panel_hd">代理列表</div>
                         <div class="weui_panel_bd">
                             <div class="weui_media_box weui_media_small_appmsg">
-                                <div class="weui_cells">
-                                    <div class="weui_cell">
-                                        <div class="weui_cell_bd weui_cell_primary">
-                                          <p>名字</p>
-                                        </div>
-                                        <div class="weui_cell_ft">
-                                           <a href="javascript:;" class="weui_btn weui_btn_mini weui_btn_warn">冻结</a>
-                                        </div>
-                                    </div>
-                                     <div class="weui_cell">
-                                        <div class="weui_cell_bd weui_cell_primary">
-                                          <p>名字</p>
-                                        </div>
-                                        <div class="weui_cell_ft">
-                                           <a href="javascript:;" class="weui_btn weui_btn_mini weui_btn_primary">解冻</a>
-                                        </div>
-                                    </div>
+                                <div class="weui_cells daililistDiv" >
+                                    
                                 </div>
                             </div>
                         </div>
@@ -210,8 +195,8 @@
                 </div>
             </div>
            <div class="weui-row">
-              <div class="weui-col-50 demos-cneter">累计销量：<span>120</span> 张</div>
-              <div class="weui-col-50 demos-cneter">今日销量：<span>20</span>张</div>
+              <div class="weui-col-50 demos-cneter">累计销量：<span class="totaltxt">120</span> 张</div>
+              <div class="weui-col-50 demos-cneter">今日销量：<span class="todaytxt">20</span>张</div>
             </div>
             <a href="javascript:;" style="width: 80%;margin:20px 10% " class="weui_btn weui_btn_primary chongkaBtn">在线充值</a>
             <div>
@@ -271,7 +256,7 @@
                     </div>
                     <div class="weui_panel_bd">
                         <div class="weui_media_box weui_media_small_appmsg">
-                            <div class="weui_cells">
+                            <div class="weui_cells playersDiv">
                                    <div class="weui_cell">
                                     <div class="weui_cell_bd weui_cell_primary">
                                        <div class="weui-row">
@@ -303,7 +288,7 @@
                     </div>
                     <div class="weui_panel_bd">
                         <div class="weui_media_box weui_media_small_appmsg">
-                            <div class="weui_cells">
+                            <div class="weui_cells playerpaihangDiv">
                                 <div class="weui_cell">
                                     <div class="weui_cell_bd weui_cell_primary">
                                        <div class="weui-row">
@@ -340,7 +325,7 @@
                     </div>
                     <div class="weui_panel_bd">
                         <div class="weui_media_box weui_media_small_appmsg">
-                            <div class="weui_cells">
+                            <div class="weui_cells dateskdiv">
                                    <div class="weui_cell">
                                     <div class="weui_cell_bd weui_cell_primary">
                                        <div class="weui-row">
@@ -371,7 +356,7 @@
                     </div>
                     <div class="weui_panel_bd">
                         <div class="weui_media_box weui_media_small_appmsg">
-                            <div class="weui_cells">
+                            <div class="weui_cells monthskdiv">
                                 <div class="weui_cell">
                                     <div class="weui_cell_bd weui_cell_primary">
                                        <div class="weui-row">
@@ -440,17 +425,17 @@
     var token="";
     var user;
     var goods;
-    var owmlist=[];
-    var userlist=[];
+    var owmlist=[],userlist=[],playerslist=[],daililist=[],datesklist=[],monthsklist=[];
+
     $(function () {
         $(".tab4").hide();
-         $(".adddailiBtn").click(function () {
+        $(".adddailiBtn").click(function () {
             $(".dailiguanliBtn").show();
             $(".adddailiBtn").hide();
             $(".adddailidiv").show();
             $(".dailiguanlidiv").hide();
         })
-         $(".dailiguanliBtn").click(function () {
+        $(".dailiguanliBtn").click(function () {
             $(".dailiguanliBtn").hide();
             $(".adddailiBtn").show();
             $(".adddailidiv").hide();
@@ -462,7 +447,7 @@
             $(".goukapaihangdiv").show();
             $(".wanjiaguanlidiv").hide();
         })
-         $(".wanjiaguanliBtn").click(function () {
+        $(".wanjiaguanliBtn").click(function () {
             $(".wanjiaguanliBtn").hide();
             $(".goukapaihangBtn").show();
             $(".goukapaihangdiv").hide();
@@ -474,7 +459,7 @@
             $(".jinriBtn").show();
             $(".benyueBtn").hide();
         })
-         $(".jinriBtn").click(function () {
+        $(".jinriBtn").click(function () {
             $(".benyuediv").hide();
             $(".jinridiv").show();
             $(".jinriBtn").hide();
@@ -519,34 +504,8 @@
                             }
                         }
                        
-
-                        $.showLoading("正在加载数据...");
-                        $.ajax({ type: "post",
-                            url:httpurl+"admin/getCardList",
-                            data:"status="+"&token="+token+"&rows=1000",
-                            success:function(info){
-                                $.hideLoading();
-                                if(info.rows)
-                                {
-                                    if(info.rows.length>0)
-                                    {
-                                        k=info.rows.length;
-                                        owmlist=[];
-                                        userlist=[];
-                                        for(var i=0;i<k;i++)
-                                        {
-                                            if(info.rows[i].bizid)
-                                                userlist.push(info.rows[i]);
-                                            else
-                                                owmlist.push(info.rows[i]);
-                                        }
-                                    }
-                                }
-                                setList();
-                            },
-                            error: function () {   $.hideLoading();
-                                $.toptip('连接不上服务器', 'error'); }
-                        });
+                        initdata();
+                       
                     }else if(info.code == "000002"){
                         $.toptip('帐号密码错误', 'error');
                     }else
@@ -560,15 +519,21 @@
                 }
             });
         })
-        //  $(".loginidtxt").val("admin")
-        // $(".loginpwdtxt").val("admin")
-        // $(".loginBtn").click();
+        $(".loginidtxt").val("admin")
+        $(".loginpwdtxt").val("admin")
+        $(".loginBtn").click();
         //增加代理
         $(".addBtn").click(function () {
+            if($(".addidtxt").val()==""||$(".addpwdtxt").val()==""||$(".addnametxt").val()==""||$(".addwxtxt").val()==""||$(".addbanktxt").val()==""||$(".addteltxt").val()=="")
+            {
+                $.toptip("请输入信息");
+                return;
+            }
             $.showLoading();
             $.ajax({ type: "post",
                 url:httpurl+"admin/add",
-                data:"id="+$(".addidtxt").val()+"&pwd="+$(".addpwdtxt").val()+"&name="+$(".addnametxt").val()+"&token="+token,
+                data:"id="+$(".addidtxt").val()+"&pwd="+$(".addpwdtxt").val()+"&name="+$(".addnametxt").val()+"&token="+token+
+                        "&weixin="+$(".addwxtxt").val()+"&bank="+$(".addbanktxt").val()+"&phone="+$(".addteltxt").val(),
                 success:function(info){
                     $.hideLoading();
                     if(info.code == "000000")
@@ -577,6 +542,9 @@
                         $(".addidtxt").val("");
                         $(".addpwdtxt").val("");
                         $(".addnametxt").val("");
+                        $(".addwxtxt").val("");
+                        $(".addbanktxt").val("");
+                        $(".addteltxt").val("");
                     }else
                     {
                         $.toptip(info.msg, 'error');
@@ -700,6 +668,297 @@
            
         })
     })
+    
+    function initdata(){
+        getcardlist();
+        getplayerlist();
+        getdatesklist();
+        getmonthsklist();
+        getowntoday();
+        getowntotal();
+        if(user.groups=="s")
+            getuserlist();
+    }
+    //zijid zong ka shu
+    function getowntotal() 
+    {
+         $.ajax({ type: "post",
+            url:httpurl+"admin/saleTop",
+            data:"token="+token+"&id="+user.id,
+            success:function(info){
+               console.log(info);
+               if(info.rows[0])
+                    $(".totaltxt").text(info.rows[0].num);
+                else
+                    $(".totaltxt").text("0");
+            },
+            error: function () {   $.hideLoading();
+                $.toptip('连接不上服务器', 'error'); }
+        });
+    }
+    function getowntoday() 
+    {
+         $.ajax({ type: "post",
+            url:httpurl+"admin/saleTop",
+            data:"token="+token+"&id="+user.id+"beginTime="+todayTime(),
+            success:function(info){
+               console.log(info.rows[0]);
+               if(info.rows[0])
+                    $(".todaytxt").text(info.rows[0].num);
+                else
+                    $(".todaytxt").text("0");
+            },
+            error: function () {   $.hideLoading();
+                $.toptip('连接不上服务器', 'error'); }
+        });
+    }
+    //shoukapaihang--------------------------
+    function getdatesklist()
+    {
+        $.ajax({ type: "post",
+            url:httpurl+"admin/saleTop",
+            data:"token="+token+"&rows=20"+"&beginTime="+todayTime(),
+            success:function(info){
+                $.hideLoading();
+                $(".dateskdiv").children().remove();
+                if(info.rows)
+                {
+                    if(info.rows.length>0)
+                    {
+                        datesklist=info.rows;
+                        k=datesklist.length;
+                        for(var i=0;i<k;i++)
+                        {
+                            var  div= '<div class="weui_cell">'+
+                                    '<div class="weui_cell_bd weui_cell_primary">'+
+                                       '<div class="weui-row">'+
+                                         '<div class="weui-col-50">'+datesklist[i].name+'</div>'+
+                                          '<div class="weui-col-50">'+datesklist[i].num+'</div>'+
+                                        '</div>'+
+                                    '</div>'+
+                                  '</div>'
+                            $(".dateskdiv").append(div);
+                        }
+                    }
+                }
+            },
+            error: function () {   $.hideLoading();
+                $.toptip('连接不上服务器', 'error'); }
+        });
+    }
+    function getmonthsklist()
+    {
+        $.showLoading("正在加载数据...");
+        $.ajax({ type: "post",
+            url:httpurl+"admin/saleTop",
+            data:"token="+token+"&rows=20"+"&beginTime="+monthTime(),
+            success:function(info){
+                $.hideLoading();
+                $(".monthskdiv").children().remove();
+                if(info.rows)
+                {
+                    if(info.rows.length>0)
+                    {
+                        monthsklist=info.rows;
+                        k=monthsklist.length;
+                        for(var i=0;i<k;i++)
+                        {
+                            var  div= '<div class="weui_cell">'+
+                                    '<div class="weui_cell_bd weui_cell_primary">'+
+                                       '<div class="weui-row">'+
+                                         '<div class="weui-col-50">'+monthsklist[i].name+'</div>'+
+                                          '<div class="weui-col-50">'+monthsklist[i].num+'</div>'+
+                                        '</div>'+
+                                    '</div>'+
+                                  '</div>'
+                            $(".monthskdiv").append(div);
+                        }
+                    }
+                }
+            },
+            error: function () {   $.hideLoading();
+                $.toptip('连接不上服务器', 'error'); }
+        });
+    }
+    //daili--------------------------
+    function getuserlist()
+    {
+        $.showLoading("正在加载数据...");
+        $.ajax({ type: "post",
+            url:httpurl+"admin/saleTop",
+            data:"token="+token+"&rows=1000",
+            success:function(info){
+                $.hideLoading();
+                if(info.rows)
+                {
+                    if(info.rows.length>0)
+                    {
+                        daililist=info.rows;
+                        setdaililist(daililist);
+                    }
+                }
+            },
+            error: function () {   $.hideLoading();
+                $.toptip('连接不上服务器', 'error'); }
+        });
+    }
+    function setdaililist()
+    {
+        $(".daililistDiv").children().remove();
+        var k=daililist.length;
+        for(var i=0;i<k;i++)
+        {
+            if(daililist[i].id=="admin")
+                continue;
+            var div;
+            if(daililist[i].freeze=="0"||daililist[i].freeze==null)
+            {
+                 div='<div class="weui_cell">'+
+                        '<div class="weui_cell_bd weui_cell_primary">'+
+                          '<p>'+daililist[i].name+'</p>'+
+                       ' </div>'+
+                        '<div class="weui_cell_ft">'+
+                         '  <a href="javascript:;" class="weui_btn weui_btn_mini weui_btn_warn" id='+daililist[i].id+' name='+daililist[i].name+' onclick="onFreeze(this)" >冻结</a>'+
+                        '</div>'+
+                    '</div>'
+                }else
+                {
+                     div='<div class="weui_cell">'+
+                        '<div class="weui_cell_bd weui_cell_primary">'+
+                          '<p>'+daililist[i].name+'</p>'+
+                       ' </div>'+
+                        '<div class="weui_cell_ft">'+
+                         '  <a href="javascript:;" class="weui_btn weui_btn_mini weui_btn_primary" id='+daililist[i].id+' name='+daililist[i].name+' onclick="onRemovefreeze(this)">解冻</a>'+
+                        '</div>'+
+                    '</div>'
+                }
+            $(".daililistDiv").append(div);
+        }
+    }
+      //冻结
+    function onFreeze(o){
+        console.log("wwww")
+        // alert("自定义的消息内容");
+        $.confirm("确定要冻结代理:"+o.getAttribute("name"), function() {
+             sendfreeze("1",o.getAttribute("id"));
+        }, function() {
+          //点击取消后的回调函数
+        });
+    }
+      //解冻
+    function onRemovefreeze(o){
+        $.confirm("确定要解除冻结代理:"+o.getAttribute("name"), function() {
+             sendfreeze("0",o.getAttribute("id"));
+        }, function() {
+          //点击取消后的回调函数
+        });
+    }
+    function sendfreeze(num,id)
+    {
+        // http://180.76.173.116:8080/majiang/admin/freeze?id=333&freeze=0&token=admin1477410458765   freeze冻结1  解冻0
+        $.showLoading("正在加载数据...");
+        $.ajax({ type: "post",
+            url:httpurl+"admin/freeze",
+            data:"id="+id+"&token="+token+"&freeze="+num,
+            success:function(info){
+                $.hideLoading();
+                $.toast("操作成功");
+                getuserlist();
+            },
+            error: function () {   $.hideLoading();
+                $.toptip('连接不上服务器', 'error'); }
+        });
+    }
+    // wanjia--------------------------
+    function getplayerlist()
+    {
+        $.showLoading("正在加载数据...");
+        $.ajax({ type: "post",
+            url:httpurl+"admin/buyTop",
+            data:"status="+"&token="+token+"&rows=1000",
+            success:function(info){
+                $.hideLoading();
+                if(info.rows)
+                {
+                    if(info.rows.length>0)
+                    {
+                        playerslist=info.rows;
+                        setplayerlist();
+                    }
+                }
+            },
+            error: function () {   $.hideLoading();
+                $.toptip('连接不上服务器', 'error'); }
+        });
+    }
+    function setplayerlist()
+    {
+        $(".playersDiv").children().remove();
+        $(".playerpaihangDiv").children().remove();
+        var k=playerslist.length;
+        for(var i=0;i<k;i++)
+        {
+            
+            var  div='<div class="weui_cell">'+
+                                    '<div class="weui_cell_bd weui_cell_primary">'+
+                                       '<div class="weui-row">'+
+                                          '<div class="weui-col-50">'+playerslist[i].id+'</div>'+
+                                          '<div class="weui-col-50">'+playerslist[i].name+'</div>'+
+                                        '</div>'+
+                                    '</div>'+
+                                  '</div>'
+              
+            $(".playersDiv").append(div);
+        }
+        playerslist.sort(function(a,b){
+            return b.num-a.num});
+        for(var i=0;i<k;i++)
+        {
+            
+            var  div='<div class="weui_cell">'+
+                                    '<div class="weui_cell_bd weui_cell_primary">'+
+                                       '<div class="weui-row">'+
+                                          '<div class="weui-col-33">'+playerslist[i].id+'</div>'+
+                                          '<div class="weui-col-33">'+playerslist[i].name+'</div>'+
+                                          '<div class="weui-col-33">'+playerslist[i].num+'</div>'+
+                                        '</div>'+
+                                    '</div>'+
+                                  '</div>'
+              
+            $(".playerpaihangDiv").append(div);
+        }
+    }
+    // chongzhijilu-------------------
+    function getcardlist()
+    {
+        $.showLoading("正在加载数据...");
+        $.ajax({ type: "post",
+            url:httpurl+"admin/getCardList",
+            data:"status="+"&token="+token+"&rows=1000",
+            success:function(info){
+                $.hideLoading();
+                if(info.rows)
+                {
+                    if(info.rows.length>0)
+                    {
+                        k=info.rows.length;
+                        owmlist=[];
+                        userlist=[];
+                        for(var i=0;i<k;i++)
+                        {
+                            if(info.rows[i].bizid)
+                                userlist.push(info.rows[i]);
+                            else
+                                owmlist.push(info.rows[i]);
+                        }
+                    }
+                }
+                setList();
+            },
+            error: function () {   $.hideLoading();
+                $.toptip('连接不上服务器', 'error'); }
+        });
+    }
     function setList(){
         $(".owmlists").children().remove();
         $(".userlists").children().remove();
@@ -832,6 +1091,41 @@
          if (ss < 10) 
             clock += '0'; 
         clock += ss; 
+        return(clock); 
+    } 
+
+    function todayTime()
+    { 
+        var now = new Date();
+       
+        var year = now.getFullYear();       //年
+        var month = now.getMonth() + 1;     //月
+        var day = now.getDate();            //日
+        var clock = year + "/";
+       
+        if(month < 10)
+            clock += "0";
+       
+        clock += month + "/";
+       
+        if(day < 10)
+            clock += "0";
+           
+        clock += day + " "+"00:00:00";
+        return(clock); 
+    } 
+    function monthTime()
+    { 
+        var now = new Date();
+        var year = now.getFullYear();       //年
+        var month = now.getMonth() + 1;     //月
+        var day = now.getDate();            //日
+        var clock = year + "/";
+       
+        if(month < 10)
+            clock += "0";
+        clock += month + "/";
+        clock += "01" + " "+"00:00:00";
         return(clock); 
     } 
 //    admin/login?id=aaa&pwd=aaa
