@@ -99,9 +99,9 @@
                 }
             });
         })
-        // $(".loginidtxt").val("admin")
-        // $(".loginpwdtxt").val("admin")
-        // $(".loginBtn").click();
+        $(".loginidtxt").val("admin")
+        $(".loginpwdtxt").val("admin")
+        $(".loginBtn").click();
         //增加代理
         $(".addBtn").click(function () {
             if($(".addidtxt").val()==""||$(".addpwdtxt").val()==""||$(".addnametxt").val()==""||$(".addwxtxt").val()==""||$(".addbanktxt").val()==""||$(".addteltxt").val()=="")
@@ -434,26 +434,48 @@
             if(daililist[i].freeze=="0"||daililist[i].freeze==null)
             {
                  div='<div class="weui_cell">'+
-                        '<div class="weui_cell_bd weui_cell_primary">'+
+                        '<div class="weui_cell_bd weui_cell_primary" id='+daililist[i].id+' onclick="onSeachdaili(this)">'+
                           '<p>'+daililist[i].name+'</p>'+
                        ' </div>'+
                         '<div class="weui_cell_ft">'+
-                         '  <a href="javascript:;" class="weui_btn weui_btn_mini weui_btn_warn" id='+daililist[i].id+' name='+daililist[i].name+' onclick="onFreeze(this)" >冻结</a>'+
+                         '  <a href="javascript:;" class="weui_btn weui_btn_mini weui_btn_warn" id='+
+                         daililist[i].id+' name='+daililist[i].name+' onclick="onFreeze(this)" >冻结</a>'+
                         '</div>'+
                     '</div>'
                 }else
                 {
-                     div='<div class="weui_cell">'+
+                     div='<div class="weui_cell" id='+daililist[i].id+' onclick="onSeachdaili(this)">'+
                         '<div class="weui_cell_bd weui_cell_primary">'+
                           '<p>'+daililist[i].name+'</p>'+
                        ' </div>'+
                         '<div class="weui_cell_ft">'+
-                         '  <a href="javascript:;" class="weui_btn weui_btn_mini weui_btn_primary" id='+daililist[i].id+' name='+daililist[i].name+' onclick="onRemovefreeze(this)">解冻</a>'+
+                         '  <a href="javascript:;" class="weui_btn weui_btn_mini weui_btn_primary" id='+
+                         daililist[i].id+' name='+daililist[i].name+' onclick="onRemovefreeze(this)">解冻</a>'+
                         '</div>'+
                     '</div>'
                 }
             $(".daililistDiv").append(div);
         }
+    }
+      //查选代理
+    function onSeachdaili(o){
+        console.log("wwww")
+        // alert("自定义的消息内容");
+        $.ajax({ type: "post",
+            url:httpurl+"admin/queryAgent",
+            data:"token="+token+"&id="+o.getAttribute("id"),
+            success:function(info){
+                console.log(info);
+                $.alert("222");             
+                if(info.rows)
+                {
+                   
+                   $.alert("222")
+                }
+            },
+            error: function () {   $.hideLoading();
+                $.toptip('连接不上服务器', 'error'); }
+        });
     }
       //冻结
     function onFreeze(o){
@@ -464,6 +486,7 @@
         }, function() {
           //点击取消后的回调函数
         });
+        return false;
     }
       //解冻
     function onRemovefreeze(o){
@@ -472,6 +495,7 @@
         }, function() {
           //点击取消后的回调函数
         });
+        return false;
     }
     function sendfreeze(num,id)
     {
