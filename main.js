@@ -312,6 +312,8 @@
                         k=datesklist.length;
                         for(var i=0;i<k;i++)
                         {
+                            if(datesklist[i].id=="admin")
+                                continue;
                             var  div= '<div class="weui_cell">'+
                                     '<div class="weui_cell_bd weui_cell_primary">'+
                                        '<div class="weui-row">'+
@@ -349,6 +351,8 @@
                         k=monthsklist.length;
                         for(var i=0;i<k;i++)
                         {
+                            if(monthsklist[i].id=="admin")
+                                continue;
                             var  div= '<div class="weui_cell">'+
                                     '<div class="weui_cell_bd weui_cell_primary">'+
                                        '<div class="weui-row">'+
