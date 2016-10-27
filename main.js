@@ -174,37 +174,66 @@
                 $.toptip("玩家id和数量不能为空", 'error');
                 return;
             }
-            $.confirm({
-                title: '提示',
-                text: '确定帮玩家'+$(".useridtxt").val()+"充卡?",
-                onOK: function () {
-                    $.showLoading();
-                    $.ajax({ type: "post",
-                        url:httpurl+"admin/usecard",
-                        data:"bizid="+$(".useridtxt").val()+"&num="+$(".usernumtxt").val()+"&type="+$(".usertype").val()+"&token="+token,
-                        success:function(info){
-                            $.hideLoading();
-                            if(info.code == "000000")
-                            {
-                                $.toast("成功！", 'success');
-                                adduserList($(".usertype").val(),$(".usernumtxt").val(),$(".useridtxt").val());
-                                delcard($(".usertype").val(),$(".usernumtxt").val());
-                                $(".useridtxt").val("");
-                                $(".usernumtxt").val("");
-                                initdata()
-                            }else
-                            {
-                                $.toast(info.msg, 'forbidden');
-                                $.toptip(info.msg, 'error');
-                            }
+            //xian chaxuan wanjia zai tishi 
+             $.ajax({ type: "post",
+                url:httpurl+"admin/getUserList",
+                data:"token="+token+"&bizid="+$(".useridtxt").val(),
+                success:function(info){
+                    console.log(info);
+                    if(info.rows.length==0){
+                        $.toptip('玩家不存在', 'error');
+                        $.toast('玩家不存在', 'forbidden');
+                        return;
+                    }
+                    player=info.rows[0];
+                    var fangkaxinxi="";
+                    for (var i = 0; i <player.goods.length; i++) {
+                        if(player.goods[i].type=="roundtype_4")
+                        {
+                            fangkaxinxi+="4圈房卡："+player.goods[i].value+"张          ;";
+                        }
+                         if(player.goods[i].type=="roundtype_8")
+                        {
+                            fangkaxinxi+="8圈房卡："+player.goods[i].value+"张          ;";
+                        }
+                    }
+                    $.confirm({
+                        title: '确定帮玩家'+player.name+"充卡?",
+                        text: '玩家:'+player.name+'   ;    id：'+player.bizid+'   ;    '+fangkaxinxi,
+                        onOK: function () {
+                            $.showLoading();
+                            $.ajax({ type: "post",
+                                url:httpurl+"admin/usecard",
+                                data:"bizid="+$(".useridtxt").val()+"&num="+$(".usernumtxt").val()+"&type="+$(".usertype").val()+"&token="+token,
+                                success:function(info){
+                                    $.hideLoading();
+                                    if(info.code == "000000")
+                                    {
+                                        $.toast("成功！", 'success');
+                                        adduserList($(".usertype").val(),$(".usernumtxt").val(),$(".useridtxt").val());
+                                        delcard($(".usertype").val(),$(".usernumtxt").val());
+                                        $(".useridtxt").val("");
+                                        $(".usernumtxt").val("");
+                                        initdata()
+                                    }else
+                                    {
+                                        $.toast(info.msg, 'forbidden');
+                                        $.toptip(info.msg, 'error');
+                                    }
+                                },
+                                error: function () {   $.hideLoading();
+                                    $.toptip('连接不上服务器', 'error'); }
+                            });
                         },
-                        error: function () {   $.hideLoading();
-                            $.toptip('连接不上服务器', 'error'); }
+                        onCancel: function () {
+                        }
                     });
                 },
-                onCancel: function () {
-                }
+                error: function () {   $.hideLoading();
+                    $.toptip('连接不上服务器', 'error'); }
             });
+           
+            
         })
         //搜索
         $(".suosou").click(function () {
@@ -525,7 +554,7 @@
         $.showLoading("正在加载数据...");
         $.ajax({ type: "post",
             url:httpurl+"admin/getCardList",
-            data:"status="+"&token="+token+"&rows=1000",
+            data:"token="+token+"&rows=1000",
             success:function(info){
                 $.hideLoading();
                 if(info.rows)
@@ -538,9 +567,14 @@
                         for(var i=0;i<k;i++)
                         {
                             if(info.rows[i].bizid)
+                            {
                                 userlist.push(info.rows[i]);
+                            }
                             else
-                                owmlist.push(info.rows[i]);
+                            {
+                                if(info.rows[i].agentid==user.id)
+                                    owmlist.push(info.rows[i]);
+                            }
                         }
                     }
                 }
