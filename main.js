@@ -465,12 +465,11 @@
             url:httpurl+"admin/queryAgent",
             data:"token="+token+"&id="+o.getAttribute("id"),
             success:function(info){
-                console.log(info);
-                $.alert("222");             
-                if(info.rows)
+                if(info)
                 {
+                   $.alert("本月售卡:"+info.sale[0].num+"张  ;  上卡:"
+                    +info.buy[0].num+"张","玩家："+info.agent.name+"  ;  id:"+info.agent.id)
                    
-                   $.alert("222")
                 }
             },
             error: function () {   $.hideLoading();
