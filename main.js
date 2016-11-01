@@ -99,9 +99,9 @@
                 }
             });
         })
-        $(".loginidtxt").val("admin")
-        $(".loginpwdtxt").val("admin")
-        $(".loginBtn").click();
+        // $(".loginidtxt").val("admin")
+        // $(".loginpwdtxt").val("admin")
+        // $(".loginBtn").click();
         //增加代理
         $(".addBtn").click(function () {
             if($(".addidtxt").val()==""||$(".addpwdtxt").val()==""||$(".addnametxt").val()==""||$(".addwxtxt").val()==""||$(".addbanktxt").val()==""||$(".addteltxt").val()=="")
@@ -519,7 +519,7 @@
         $.showLoading("正在加载数据...");
         $.ajax({ type: "post",
             url:httpurl+"admin/buyTop",
-            data:"status="+"&token="+token+"&rows=1000",
+            data:"status="+"&token="+token+"&rows=1000&agentid="+user.id,
             success:function(info){
                 $.hideLoading();
                 if(info.rows)
