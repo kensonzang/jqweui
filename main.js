@@ -512,7 +512,7 @@
                 $.toptip('连接不上服务器', 'error'); }
         });
     }
-    // wanjia--------------------------
+    // wanjia--------------------------ss
     function getplayerlist()
     {
         $.showLoading("正在加载数据...");
