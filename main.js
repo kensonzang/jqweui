@@ -508,8 +508,10 @@
                 $.toast("操作成功");
                 getuserlist();
             },
-            error: function () {   $.hideLoading();
-                $.toptip('连接不上服务器', 'error'); }
+            error: function () {  
+                $.hideLoading();
+                $.toptip('连接不上服务器', 'error'); 
+            }
         });
     }
     // wanjia--------------------------ss
@@ -518,7 +520,7 @@
         $.showLoading("正在加载数据...");
         $.ajax({ type: "post",
             url:httpurl+"admin/buyTop",
-            data:"status="+"&token="+token+"&rows=1000&agentid="+user.id,
+            data:"status="+"&token="+token+"&rows=1000&id="+user.id,
             success:function(info){
                 $.hideLoading();
                 if(info.rows)
