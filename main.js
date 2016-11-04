@@ -299,6 +299,7 @@
         getdatesklist();
         getmonthsklist();
         getowntoday();
+        getownmonth();
         getowntotal();
         if(user.groups=="s")
             getuserlist();
@@ -320,9 +321,25 @@
                 $.toptip('连接不上服务器', 'error'); }
         });
     }
+    function getownmonth() 
+    {
+        $.ajax({ type: "post",
+            url:httpurl+"admin/saleTop",
+            data:"token="+token+"&id="+user.id+"&beginTime="+monthTime(),
+            success:function(info){
+               console.log(info.rows[0]);
+               if(info.rows[0])
+                    $(".monthtxt").text(info.rows[0].num);
+                else
+                    $(".monthtxt").text("0");
+            },
+            error: function () {   $.hideLoading();
+                $.toptip('连接不上服务器', 'error'); }
+        });
+    }
     function getowntoday() 
     {
-         $.ajax({ type: "post",
+        $.ajax({ type: "post",
             url:httpurl+"admin/saleTop",
             data:"token="+token+"&id="+user.id+"&beginTime="+todayTime(),
             success:function(info){
@@ -516,6 +533,19 @@
                                 $(".dailitodaytxt").text(info.rows[0].num);
                             else
                                 $(".dailitodaytxt").text("0");
+                        },
+                        error: function () {   $.hideLoading();
+                            $.toptip('连接不上服务器', 'error'); }
+                    });
+                    $.ajax({ type: "post",
+                        url:httpurl+"admin/saleTop",
+                        data:"token="+token+"&id="+info.agent.id+"&beginTime="+monthTime(),
+                        success:function(info){
+                           console.log(info.rows[0]);
+                           if(info.rows[0])
+                                $(".dailimonthtxt").text(info.rows[0].num);
+                            else
+                                $(".dailimonthtxt").text("0");
                         },
                         error: function () {   $.hideLoading();
                             $.toptip('连接不上服务器', 'error'); }
