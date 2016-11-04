@@ -100,9 +100,9 @@
                 }
             });
         })
-        $(".loginidtxt").val("admin")
-        $(".loginpwdtxt").val("admin")
-        $(".loginBtn").click();
+        // $(".loginidtxt").val("111")
+        // $(".loginpwdtxt").val("111")
+        // $(".loginBtn").click();
         //增加代理
         $(".addBtn").click(function () {
             if($(".addidtxt").val()==""||$(".addpwdtxt").val()==""||$(".addnametxt").val()==""||$(".addwxtxt").val()==""||$(".addbanktxt").val()==""||$(".addteltxt").val()=="")
@@ -587,23 +587,24 @@
                                 var totolnum=0;
                                 var todaynum=0;
                                 var monthnum=0;
-                                var daytime=hengtodayTime();
+                                var daytime=upmonthTime();
                                 var montime=hengmonthTime();
+                                console.log(daytime)
                                 for(var i=0;i<list.length;i++)
                                 {
-                                   totolnum+=Number(owmlist[i].num);
-                                   if(owmlist[i].createTime.indexOf(daytime)!=-1)
+                                   totolnum+=Number(list[i].num);
+                                   if(list[i].createTime.indexOf(daytime)!=-1)
                                    {
-                                     todaynum+=Number(owmlist[i].num);
+                                     todaynum+=Number(list[i].num);
                                    }
-                                   if(owmlist[i].createTime.indexOf(montime)!=-1)
+                                   if(list[i].createTime.indexOf(montime)!=-1)
                                    {
-                                     monthnum+=Number(owmlist[i].num);
+                                     monthnum+=Number(list[i].num);
                                    }
                                 }
                                 $(".dailitotaljintxt").text(totolnum);
-                                $(".dailitodayjintxt").text(todaynum);
                                 $(".dailimonthjintxt").text(monthnum);
+                                $(".dailiupmonthjintxt").text(todaynum);
                             }
                         },
                         error: function () {   $.hideLoading();
@@ -767,7 +768,7 @@
         var totolnum=0;
         var todaynum=0;
         var monthnum=0;
-        var daytime=hengtodayTime();
+        var daytime=upmonthTime();
         var montime=hengmonthTime();
         for(var i=0;i<k;i++)
         {
@@ -782,8 +783,8 @@
            }
         }
         $(".totaljintxt").text(totolnum);
-        $(".todayjintxt").text(todaynum);
         $(".monthjintxt").text(monthnum);
+        $(".upmonthjintxt").text(todaynum);
 
     }
     function setList(){
@@ -957,24 +958,25 @@
     } 
 
 
-    function hengtodayTime()
+    function upmonthTime()
     { 
         var now = new Date();
        
         var year = now.getFullYear();       //年
         var month = now.getMonth() + 1;     //月
-        var day = now.getDate();            //日
+        if(month==1)
+        {
+            year--;
+            month=12;
+        }else {
+            month--;
+        }
         var clock = year + "-";
        
         if(month < 10)
             clock += "0";
        
-        clock += month + "-";
-       
-        if(day < 10)
-            clock += "0";
-           
-        clock += day ;
+        clock += month;
         return(clock); 
     } 
     function hengmonthTime()
