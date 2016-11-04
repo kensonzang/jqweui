@@ -6,6 +6,7 @@
 
     $(function () {
         $(".tab4").hide();
+        $(".tab7").hide();
         $(".adddailiBtn").click(function () {
             $(".dailiguanliBtn").show();
             $(".adddailiBtn").hide();
@@ -190,12 +191,25 @@
                     for (var i = 0; i <player.goods.length; i++) {
                         if(player.goods[i].type=="roundtype_4")
                         {
-                            fangkaxinxi+="4圈房卡："+player.goods[i].value+"张          ;";
+                            fangkaxinxi+="四圈房卡："+player.goods[i].value+"张          ;";
                         }
                          if(player.goods[i].type=="roundtype_8")
                         {
-                            fangkaxinxi+="8圈房卡："+player.goods[i].value+"张          ;";
+                            fangkaxinxi+="八圈房卡："+player.goods[i].value+"张          ;";
                         }
+                    }
+                    if(player.goods.length==0)
+                    {
+                        fangkaxinxi+="四圈房卡：0张          ;";
+                        fangkaxinxi+="八圈房卡：0张          ;";
+                    }else if(player.goods.length==1)
+                    {
+                        if(fangkaxinxi.indexOf("四圈房卡")!=-1)
+                        {
+                             fangkaxinxi+="八圈房卡：0张          ;";
+                         }else {
+                             fangkaxinxi+="四圈房卡：0张          ;";
+                         }
                     }
                     $.confirm({
                         title: '确定帮玩家'+player.name+"充卡?",
@@ -460,15 +474,65 @@
       //查选代理
     function onSeachdaili(o){
         console.log("wwww")
-        // alert("自定义的消息内容");
         $.ajax({ type: "post",
             url:httpurl+"admin/queryAgent",
             data:"token="+token+"&id="+o.getAttribute("id"),
             success:function(info){
                 if(info)
                 {
-                   $.alert("本月售卡:"+info.sale[0].num+"张  ;  上卡:"
-                    +info.buy[0].num+"张","玩家："+info.agent.name+"  ;  id:"+info.agent.id)
+                    $(".tab7").click();
+                   // $.alert("本月售卡:"+info.sale[0].num+"张  ;  上卡:"
+                   //  +info.buy[0].num+"张","玩家："+info.agent.name+"  ;  id:"+info.agent.id)
+                    $(".dailiownidtxt").val(info.agent.id);
+                    $(".dailiownnametxt").val(info.agent.name);
+                    $(".dailiownteltxt").val(info.agent.phone);
+                    $(".dailiownbanktxt").val(info.agent.bank);
+                    $(".dailiownwxtxt").val(info.agent.weixin);
+                    var goods=info.agent.goods;
+                    if(goods.length)
+                    {
+                        if(goods[0].type=="roundtype_4")
+                        {
+                            $(".dailiown4txt").val(goods[0].value);
+                            if(goods.length>1)
+                                $(".dailiown8txt").val(goods[1].value);
+                            else
+                                $(".dailiown8txt").val("0");
+                        }else
+                        {
+                            $(".dailiown8txt").val(goods[0].value);
+                            if(goods.length>1)
+                                $(".dailiown4txt").val(goods[1].value);
+                            else
+                                $(".dailiown4txt").val("0");
+                        }
+                    }
+                    $.ajax({ type: "post",
+                        url:httpurl+"admin/saleTop",
+                        data:"token="+token+"&id="+info.agent.id+"&beginTime="+todayTime(),
+                        success:function(info){
+                           console.log(info.rows[0]);
+                           if(info.rows[0])
+                                $(".dailitodaytxt").text(info.rows[0].num);
+                            else
+                                $(".dailitodaytxt").text("0");
+                        },
+                        error: function () {   $.hideLoading();
+                            $.toptip('连接不上服务器', 'error'); }
+                    });
+                    $.ajax({ type: "post",
+                        url:httpurl+"admin/saleTop",
+                        data:"token="+token+"&id="+info.agent.id,
+                        success:function(info){
+                           console.log(info);
+                           if(info.rows[0])
+                                $(".dailitotaltxt").text(info.rows[0].num);
+                            else
+                                $(".dailitotaltxt").text("0");
+                        },
+                        error: function () {   $.hideLoading();
+                            $.toptip('连接不上服务器', 'error'); }
+                    });
                    
                 }
             },
@@ -518,9 +582,14 @@
     function getplayerlist()
     {
         $.showLoading("正在加载数据...");
+        var str=user.id;
+        if(user.id=="admin")
+        {
+            str=""
+        }
         $.ajax({ type: "post",
             url:httpurl+"admin/buyTop",
-            data:"status="+"&token="+token+"&rows=1000&id="+user.id,
+            data:"status="+"&token="+token+"&rows=1000&id="+str,
             success:function(info){
                 $.hideLoading();
                 if(info.rows)
