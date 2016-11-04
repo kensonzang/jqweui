@@ -100,9 +100,9 @@
                 }
             });
         })
-        // $(".loginidtxt").val("admin")
-        // $(".loginpwdtxt").val("admin")
-        // $(".loginBtn").click();
+        $(".loginidtxt").val("admin")
+        $(".loginpwdtxt").val("admin")
+        $(".loginBtn").click();
         //增加代理
         $(".addBtn").click(function () {
             if($(".addidtxt").val()==""||$(".addpwdtxt").val()==""||$(".addnametxt").val()==""||$(".addwxtxt").val()==""||$(".addbanktxt").val()==""||$(".addteltxt").val()=="")
@@ -563,6 +563,52 @@
                         error: function () {   $.hideLoading();
                             $.toptip('连接不上服务器', 'error'); }
                     });
+                    $.ajax({ type: "post",
+                        url:httpurl+"admin/getCardList",
+                        data:"token="+token+"&rows=100000&agentid="+info.agent.id,
+                        success:function(info){
+                            if(info.rows)
+                            {
+                                if(info.rows.length>0)
+                                {
+                                    var k=info.rows.length;
+                                    var list=[];
+                                    for(var i=0;i<k;i++)
+                                    {
+                                        if(info.rows[i].bizid)
+                                        {
+                                        }
+                                        else
+                                        {
+                                            list.push(info.rows[i]);
+                                        }
+                                    }
+                                }
+                                var totolnum=0;
+                                var todaynum=0;
+                                var monthnum=0;
+                                var daytime=hengtodayTime();
+                                var montime=hengmonthTime();
+                                for(var i=0;i<list.length;i++)
+                                {
+                                   totolnum+=Number(owmlist[i].num);
+                                   if(owmlist[i].createTime.indexOf(daytime)!=-1)
+                                   {
+                                     todaynum+=Number(owmlist[i].num);
+                                   }
+                                   if(owmlist[i].createTime.indexOf(montime)!=-1)
+                                   {
+                                     monthnum+=Number(owmlist[i].num);
+                                   }
+                                }
+                                $(".dailitotaljintxt").text(totolnum);
+                                $(".dailitodayjintxt").text(todaynum);
+                                $(".dailimonthjintxt").text(monthnum);
+                            }
+                        },
+                        error: function () {   $.hideLoading();
+                            $.toptip('连接不上服务器', 'error'); }
+                    });
                    
                 }
             },
@@ -676,9 +722,16 @@
     function getcardlist()
     {
         $.showLoading("正在加载数据...");
+        var str="";
+        if(user.id=="admin")
+        {
+            str=""
+        }else {
+            str=user.id;
+        }
         $.ajax({ type: "post",
             url:httpurl+"admin/getCardList",
-            data:"token="+token+"&rows=1000",
+            data:"token="+token+"&rows=100000&agentid="+str,
             success:function(info){
                 $.hideLoading();
                 if(info.rows)
@@ -703,10 +756,35 @@
                     }
                 }
                 setList();
+                setjinka();
             },
             error: function () {   $.hideLoading();
                 $.toptip('连接不上服务器', 'error'); }
         });
+    }
+    function setjinka(){
+        var k=owmlist.length;
+        var totolnum=0;
+        var todaynum=0;
+        var monthnum=0;
+        var daytime=hengtodayTime();
+        var montime=hengmonthTime();
+        for(var i=0;i<k;i++)
+        {
+           totolnum+=Number(owmlist[i].num);
+           if(owmlist[i].createTime.indexOf(daytime)!=-1)
+           {
+             todaynum+=Number(owmlist[i].num);
+           }
+           if(owmlist[i].createTime.indexOf(montime)!=-1)
+           {
+             monthnum+=Number(owmlist[i].num);
+           }
+        }
+        $(".totaljintxt").text(totolnum);
+        $(".todayjintxt").text(todaynum);
+        $(".monthjintxt").text(monthnum);
+
     }
     function setList(){
         $(".owmlists").children().remove();
@@ -875,5 +953,39 @@
             clock += "0";
         clock += month + "/";
         clock += "01" + " "+"00:00:00";
+        return(clock); 
+    } 
+
+
+    function hengtodayTime()
+    { 
+        var now = new Date();
+       
+        var year = now.getFullYear();       //年
+        var month = now.getMonth() + 1;     //月
+        var day = now.getDate();            //日
+        var clock = year + "-";
+       
+        if(month < 10)
+            clock += "0";
+       
+        clock += month + "-";
+       
+        if(day < 10)
+            clock += "0";
+           
+        clock += day ;
+        return(clock); 
+    } 
+    function hengmonthTime()
+    { 
+        var now = new Date();
+        var year = now.getFullYear();       //年
+        var month = now.getMonth() + 1;     //月
+        var clock = year + "-";
+       
+        if(month < 10)
+            clock += "0";
+        clock += month;
         return(clock); 
     } 
