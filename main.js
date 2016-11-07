@@ -65,6 +65,7 @@
                         $(".ownnametxt").val(user.name);
                         $(".ownteltxt").val(user.phone);
                         $(".ownbanktxt").val(user.bank);
+                        $(".ownzfbtxt").val(user.zhifubao);
                         $(".ownwxtxt").val(user.weixin);
                         if(goods.length)
                         {
@@ -114,7 +115,7 @@
             $.ajax({ type: "post",
                 url:httpurl+"admin/add",
                 data:"id="+$(".addidtxt").val()+"&pwd="+$(".addpwdtxt").val()+"&name="+$(".addnametxt").val()+"&token="+token+
-                        "&weixin="+$(".addwxtxt").val()+"&bank="+$(".addbanktxt").val()+"&phone="+$(".addteltxt").val(),
+                        "&weixin="+$(".addwxtxt").val()+"&bank="+$(".addbanktxt").val()+"&phone="+$(".addteltxt").val()+"&zhifubao="+$(".addzfbtxt").val(),
                 success:function(info){
                     $.hideLoading();
                     if(info.code == "000000")
@@ -125,6 +126,7 @@
                         $(".addnametxt").val("");
                         $(".addwxtxt").val("");
                         $(".addbanktxt").val("");
+                        $(".addzfbtxt").val("");
                         $(".addteltxt").val("");
                     }else
                     {
