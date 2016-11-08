@@ -20,16 +20,39 @@
             $(".dailiguanlidiv").show();
         })
         $(".goukapaihangBtn").click(function () {
-            $(".wanjiaguanliBtn").show();
             $(".goukapaihangBtn").hide();
             $(".goukapaihangdiv").show();
+
             $(".wanjiaguanlidiv").hide();
+            $(".wanjiaguanliBtn").show();
+            if(user.id=="admin")
+            {
+                $(".kaifangpaihangdiv").hide();
+                $(".kaifangpaihangBtn").show();
+            }
         })
         $(".wanjiaguanliBtn").click(function () {
             $(".wanjiaguanliBtn").hide();
+            $(".wanjiaguanlidiv").show();
+
             $(".goukapaihangBtn").show();
             $(".goukapaihangdiv").hide();
-            $(".wanjiaguanlidiv").show();
+
+            if(user.id=="admin")
+            {
+                $(".kaifangpaihangdiv").hide();
+                $(".kaifangpaihangBtn").show();
+            }
+        })
+        $(".kaifangpaihangBtn").click(function () {
+            $(".wanjiaguanliBtn").show();
+            $(".wanjiaguanlidiv").hide();
+
+            $(".goukapaihangBtn").show();
+            $(".goukapaihangdiv").hide();
+            
+            $(".kaifangpaihangdiv").show();
+            $(".kaifangpaihangBtn").hide();
         })
         $(".benyueBtn").click(function () {
             $(".benyuediv").show();
@@ -60,7 +83,10 @@
                         $(".login-tab").hide();
                         $(".weui_tab").show();
                         if(user.groups!="s")
+                        {
                             $(".tab2").remove();
+                            $(".kaifangpaihangBtn").remove();
+                        }
                         $(".ownidtxt").val(user.id);
                         $(".ownnametxt").val(user.name);
                         $(".ownteltxt").val(user.phone);
@@ -307,7 +333,37 @@
         {
             getAgentList();
             getUserList();
+            getUseCards();
         }
+    }
+    //查询开房排行榜
+    function getUseCards() 
+    {
+         $.ajax({ type: "post",
+            url:httpurl+"admin/getUserList",
+            data:"token="+token+"&rows=10000",
+            success:function(info){
+                console.log(info);
+                $(".kaifangDiv").children().remove();
+                var k=info.rows.length;
+                for(var i=0;i<k;i++)
+                {
+                    var  div='<div class="weui_cell">'+
+                                            '<div class="weui_cell_bd weui_cell_primary">'+
+                                               '<div class="weui-row">'+
+                                                  '<div class="weui-col-33">'+info.rows[i].id+'</div>'+
+                                                  '<div class="weui-col-33">'+info.rows[i].name+'</div>'+
+                                                  '<div class="weui-col-33">'+info.rows[i].num+'</div>'+
+                                                '</div>'+
+                                            '</div>'+
+                                          '</div>'
+                      
+                    $(".kaifangDiv").append(div);
+                }
+            },
+            error: function () {   $.hideLoading();
+                $.toptip('连接不上服务器', 'error'); }
+        });
     }
     //如果是admin就加载所有的玩家到玩家列表
     function getUserList() 
