@@ -340,7 +340,7 @@
     function getUseCards() 
     {
          $.ajax({ type: "post",
-            url:httpurl+"admin/getUserList",
+            url:httpurl+"admin/useTop",
             data:"token="+token+"&rows=10000",
             success:function(info){
                 console.log(info);
@@ -351,9 +351,9 @@
                     var  div='<div class="weui_cell">'+
                                             '<div class="weui_cell_bd weui_cell_primary">'+
                                                '<div class="weui-row">'+
-                                                  '<div class="weui-col-33">'+info.rows[i].id+'</div>'+
+                                                  '<div class="weui-col-33">'+info.rows[i].bizid+'</div>'+
                                                   '<div class="weui-col-33">'+info.rows[i].name+'</div>'+
-                                                  '<div class="weui-col-33">'+info.rows[i].num+'</div>'+
+                                                  '<div class="weui-col-33">'+info.rows[i].value+'</div>'+
                                                 '</div>'+
                                             '</div>'+
                                           '</div>'
