@@ -101,8 +101,8 @@
                 }
             });
         })
-        // $(".loginidtxt").val("111")
-        // $(".loginpwdtxt").val("111")
+        // $(".loginidtxt").val("admin")
+        // $(".loginpwdtxt").val("admin")
         // $(".loginBtn").click();
         //增加代理
         $(".addBtn").click(function () {
@@ -304,7 +304,38 @@
         getownmonth();
         getowntotal();
         if(user.groups=="s")
-            getuserlist();
+        {
+            getAgentList();
+            getUserList();
+        }
+    }
+    //如果是admin就加载所有的玩家到玩家列表
+    function getUserList() 
+    {
+         $.ajax({ type: "post",
+            url:httpurl+"admin/getUserList",
+            data:"token="+token+"&rows=10000",
+            success:function(info){
+                console.log(info);
+                $(".playersDiv").children().remove();
+                var k=info.rows.length;
+                for(var i=0;i<k;i++)
+                {
+                    
+                    var  div='<div class="weui_cell">'+
+                                            '<div class="weui_cell_bd weui_cell_primary">'+
+                                               '<div class="weui-row">'+
+                                                  '<div class="weui-col-50">'+info.rows[i].bizid+'</div>'+
+                                                  '<div class="weui-col-50">'+info.rows[i].name+'</div>'+
+                                                '</div>'+
+                                            '</div>'+
+                                          '</div>'
+                    $(".playersDiv").append(div);
+                }
+            },
+            error: function () {   $.hideLoading();
+                $.toptip('连接不上服务器', 'error'); }
+        });
     }
     //zijid zong ka shu
     function getowntotal() 
@@ -433,7 +464,7 @@
         });
     }
     //daili--------------------------
-    function getuserlist()
+    function getAgentList()
     {
         $.showLoading("正在加载数据...");
         $.ajax({ type: "post",
@@ -649,7 +680,7 @@
             success:function(info){
                 $.hideLoading();
                 $.toast("操作成功");
-                getuserlist();
+                getAgentList();
             },
             error: function () {  
                 $.hideLoading();
@@ -668,7 +699,7 @@
         }
         $.ajax({ type: "post",
             url:httpurl+"admin/buyTop",
-            data:"status="+"&token="+token+"&rows=1000&id="+str,
+            data:"status="+"&token="+token+"&rows=10000&id="+str,
             success:function(info){
                 $.hideLoading();
                 if(info.rows)
