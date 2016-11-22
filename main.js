@@ -1,4 +1,4 @@
- var httpurl="http://180.76.173.116:8080/majiang/";
+ var httpurl="http://139.129.235.232:8080/majiang/";
     var token="";
     var user;
     var goods;
