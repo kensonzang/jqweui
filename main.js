@@ -84,6 +84,9 @@
                         $(".weui_tab").show();
                         if(user.groups!="s")
                         {
+
+                            $(".tab4").remove();
+                            $(".chongkaBtn").remove();
                             $(".tab2").remove();
                             $(".kaifangpaihangBtn").remove();
                         }
@@ -128,7 +131,7 @@
             });
         })
         // $(".loginidtxt").val("admin")
-        // $(".loginpwdtxt").val("admin")
+        // $(".loginpwdtxt").val("maqingze5588")
         // $(".loginBtn").click();
         //增加代理
         $(".addBtn").click(function () {
@@ -147,6 +150,7 @@
                     if(info.code == "000000")
                     {
                         $.toast("添加成功！", 'success');
+                        getAgentList();
                         $(".addidtxt").val("");
                         $(".addpwdtxt").val("");
                         $(".addnametxt").val("");
@@ -316,6 +320,33 @@
                     },
                     error: function () {   $.hideLoading();
                         $.toptip('连接不上服务器', 'error'); }
+            });
+           
+        })
+        //搜索
+        $(".agenttijiaoBtn").click(function () {
+            if($(".agentnumtxt").val()=="")
+            {
+                $.toptip("数量不能为空", 'error');
+                return;
+            }
+            $.showLoading();
+            $.ajax({ type: "post",
+                url:httpurl+"admin/recv",
+                data:"agentid="+dailiname+"&num="+$(".agentnumtxt").val()+"&type="+$(".agentfangkatype").val()+"&token="+token,
+                success:function(info){
+                    $.hideLoading();
+                    if(info.code == "000000")
+                    {
+                        $.toast("成功！", 'success');
+                        $.closePopup();
+                    }else
+                    {
+                        $.toptip(info.msg, 'error');
+                    }
+                },
+                error: function () {   $.hideLoading();
+                    $.toptip('连接不上服务器', 'error'); }
             });
            
         })
@@ -558,6 +589,8 @@
                           '<p>'+daililist[i].name+'</p>'+
                        ' </div>'+
                         '<div class="weui_cell_ft">'+
+                         '  <a href="javascript:;" class="weui_btn weui_btn_mini weui_btn_primary" id='+
+                         daililist[i].id+' name='+daililist[i].name+' onclick="onAgentChongka(this)" >充卡</a>'+
                          '  <a href="javascript:;" class="weui_btn weui_btn_mini weui_btn_warn" id='+
                          daililist[i].id+' name='+daililist[i].name+' onclick="onFreeze(this)" >冻结</a>'+
                         '</div>'+
@@ -612,6 +645,9 @@
                             else
                                 $(".dailiown4txt").val("0");
                         }
+                    }else{
+                         $(".dailiown4txt").val("0");
+                         $(".dailiown8txt").val("0");
                     }
                     $.ajax({ type: "post",
                         url:httpurl+"admin/saleTop",
@@ -717,15 +753,6 @@
         });
         return false;
     }
-      //解冻
-    function onRemovefreeze(o){
-        $.confirm("确定要解除冻结代理:"+o.getAttribute("name"), function() {
-             sendfreeze("0",o.getAttribute("id"));
-        }, function() {
-          //点击取消后的回调函数
-        });
-        return false;
-    }
     function sendfreeze(num,id)
     {
         // http://180.76.173.116:8080/majiang/admin/freeze?id=333&freeze=0&token=admin1477410458765   freeze冻结1  解冻0
@@ -744,6 +771,25 @@
             }
         });
     }
+      //解冻
+    function onRemovefreeze(o){
+        $.confirm("确定要解除冻结代理:"+o.getAttribute("name"), function() {
+             sendfreeze("0",o.getAttribute("id"));
+        }, function() {
+          //点击取消后的回调函数
+        });
+        return false;
+    }
+    var dailiname="";
+    //代理充卡
+    function onAgentChongka(o){
+        dailiname=o.getAttribute("id");
+        $("#agentck").popup();
+        $(".agentname").text('为代理<'+o.getAttribute("name")+'>充卡');
+        return false;
+    }
+
+    
     // wanjia--------------------------ss
     function getplayerlist()
     {
