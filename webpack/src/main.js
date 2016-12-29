@@ -130,9 +130,9 @@
                 }
             });
         })
-        // $(".loginidtxt").val("")
-        // $(".loginpwdtxt").val("")
-        // $(".loginBtn").click();
+        $(".loginidtxt").val("admin")
+        $(".loginpwdtxt").val("maqingze5588")
+        $(".loginBtn").click();
         //增加代理
         $(".addBtn").click(function () {
             if($(".addidtxt").val()==""||$(".addpwdtxt").val()==""||$(".addnametxt").val()==""||$(".addwxtxt").val()==""||$(".addbanktxt").val()==""||$(".addteltxt").val()=="")
@@ -218,7 +218,7 @@
                         $.toast('玩家不存在', 'forbidden');
                         return;
                     }
-                    player=info.rows[0];
+                    var player=info.rows[0];
                     var fangkaxinxi="";
                     for (var i = 0; i <player.goods.length; i++) {
                         if(player.goods[i].type=="roundtype_4")
@@ -298,7 +298,7 @@
                             $.toast('玩家不存在', 'forbidden');
                             return;
                         }
-                        player=info.rows[0];
+                        var player=info.rows[0];
                         var fangkaxinxi="";
                         for (var i = 0; i <player.goods.length; i++) {
                             if(player.goods[i].type=="roundtype_4")
