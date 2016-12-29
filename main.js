@@ -130,8 +130,8 @@
                 }
             });
         })
-        // $(".loginidtxt").val("admin")
-        // $(".loginpwdtxt").val("maqingze5588")
+        // $(".loginidtxt").val("")
+        // $(".loginpwdtxt").val("")
         // $(".loginBtn").click();
         //增加代理
         $(".addBtn").click(function () {
@@ -365,6 +365,10 @@
             getAgentList();
             getUserList();
             getUseCards();
+            $(".touwanjiadiv").remove();
+        }else{
+
+            $(".touadminwanjiadiv").remove();
         }
     }
     //查询开房排行榜
@@ -412,8 +416,9 @@
                     var  div='<div class="weui_cell">'+
                                             '<div class="weui_cell_bd weui_cell_primary">'+
                                                '<div class="weui-row">'+
-                                                  '<div class="weui-col-50">'+info.rows[i].bizid+'</div>'+
-                                                  '<div class="weui-col-50">'+info.rows[i].name+'</div>'+
+                                                  '<div class="weui-col-20">'+info.rows[i].bizid+'</div>'+
+                                                  '<div class="weui-col-30">'+info.rows[i].name+'</div>'+
+                                                  '<div class="weui-col-50">'+info.rows[i].pwd+'</div>'+
                                                 '</div>'+
                                             '</div>'+
                                           '</div>'
@@ -694,10 +699,11 @@
                         success:function(info){
                             if(info.rows)
                             {
+
+                                var list=[];
                                 if(info.rows.length>0)
                                 {
                                     var k=info.rows.length;
-                                    var list=[];
                                     for(var i=0;i<k;i++)
                                     {
                                         if(info.rows[i].bizid)
