@@ -1,0 +1,567 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>主页1</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="static/lib/weui.min.css">
+    <link rel="stylesheet" href="static/css/jquery-weui.min.css">
+    <link rel="stylesheet" href="static/css/demos.css">
+    <style>
+        .suosou {
+            margin-left: 10px;line-height: 28px;white-space: nowrap;color: #09BB07;
+        }
+    </style>
+</head>
+<body style="background-color: #f2f2f2 ">
+<div class="login-tab">
+    <header class='demos-header'>
+        <h1 class="demos-title">登录</h1>
+    </header>
+    <div class="weui_cells weui_cells_form">
+        <div class="weui_cell">
+            <div class="weui_cell_hd"><label class="weui_label">帐号</label></div>
+            <div class="weui_cell_bd weui_cell_primary">
+                <input class="weui_input loginidtxt"  type="text" placeholder="帐号">
+            </div>
+        </div>
+        <div class="weui_cell">
+            <div class="weui_cell_hd"><label class="weui_label">密码</label></div>
+            <div class="weui_cell_bd weui_cell_primary">
+                <input class="weui_input loginpwdtxt" type="password" placeholder="密码">
+            </div>
+        </div>
+    </div>
+    <a href="javascript:;" style="width: 80%;margin-top:50px " class="weui_btn weui_btn_primary loginBtn">登录</a>
+</div>
+<div class="weui_tab" hidden>
+    <div class="weui_tab_bd">
+        <div id="tab1" class="weui_tab_bd_item weui_tab_bd_item_active">
+            <div class="weui_search_bar" id="search_bar">
+                <form class="weui_search_outer">
+                    <div class="weui_search_inner">
+                        <i class="weui_icon_search"></i>
+                        <input type="search" class="weui_search_input searchbizidtxt" id="search_input" placeholder="搜索玩家" required/>
+                        <a href="javascript:" class="weui_icon_clear" id="search_clear"></a>
+                    </div>
+                    <label for="search_input" class="weui_search_text" id="search_text">
+                        <i class="weui_icon_search"></i>
+                        <span>搜索玩家</span>
+                    </label>
+                </form>
+                <a href="javascript:" class="suosou">搜索</a>
+            </div>
+            <div class="weui_cells weui_cells_form">
+                <div class="weui_cell">
+                    <div class="weui_cell_hd"><label class="weui_label">玩家id</label></div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input class="weui_input useridtxt"  type="number" placeholder="玩家id">
+                    </div>
+                </div>
+                <div class="weui_cell">
+                    <div class="weui_cell_hd"><label class="weui_label">充卡数量</label></div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input class="weui_input usernumtxt" type="number" placeholder="充卡数量">
+                    </div>
+                </div>
+                <div class="weui_cell weui_cell_select">
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <select class="weui_select usertype">
+                            <option value="roundtype_4">4圈房卡</option>
+                            <option value="roundtype_8">8圈房卡</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <a href="javascript:;" style="width: 80%;margin:20px 10% " class="weui_btn weui_btn_primary userchongBtn">为玩家充卡</a>
+            <div>
+                <div class="weui_panel">
+                    <div class="weui_panel_hd">玩家的充卡记录</div>
+                    <div class="weui_panel_bd">
+                        <div class="weui_media_box weui_media_small_appmsg">
+                            <div class="weui_cells userlists">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="weui-infinite-scroll userlistscroll">
+                <div class="infinite-preloader"></div><!-- 菊花 -->
+                正在加载... <!-- 文案，可以自行修改 -->
+            </div>
+        </div>
+        <div id="tab2" class="weui_tab_bd_item">
+            <h1 class="main-title">代理管理</h1>
+            <div class="demos-cneter">
+                <div class="adddailiBtn">
+                    <a href="javascript:;" class="weui_btn weui_btn_primary weui_btn_mini ">增加代理</a>       
+                </div>
+                <div hidden class="dailiguanliBtn">
+                    <a href="javascript:;" class="weui_btn weui_btn_primary weui_btn_mini " >代理管理</a>         
+                </div>
+            </div>
+            <div>
+                <div class="weui_panel dailiguanlidiv">
+                    <div class="weui_panel">
+                        <div class="weui_panel_hd">代理列表</div>
+                        <div class="weui_panel_bd">
+                            <div class="weui_media_box weui_media_small_appmsg">
+                                <div class="weui_cells daililistDiv" >
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="weui_panel adddailidiv" hidden="">
+                    <div class="weui_panel">
+                        <div class="weui_panel_hd">增加代理</div>
+                        <div class="weui_panel_bd">
+                                <div class="weui_cell">
+                                    <div class="weui_cell_hd">
+                                        <label class="weui_label">帐号</label>
+                                    </div>
+                                    <div class="weui_cell_bd weui_cell_primary">
+                                        <input class="weui_input addidtxt"  type="text" placeholder="帐号"></div>
+                                </div>
+                                <div class="weui_cell">
+                                    <div class="weui_cell_hd">
+                                        <label class="weui_label">密码</label>
+                                    </div>
+                                    <div class="weui_cell_bd weui_cell_primary">
+                                        <input class="weui_input addpwdtxt" type="password" placeholder="密码"></div>
+                                </div>
+                                <div class="weui_cell">
+                                    <div class="weui_cell_hd">
+                                        <label class="weui_label">姓名</label>
+                                    </div>
+                                    <div class="weui_cell_bd weui_cell_primary">
+                                        <input class="weui_input addnametxt" type="text" placeholder="姓名"></div>
+                                </div>
+                                <div class="weui_cell">
+                                    <div class="weui_cell_hd">
+                                        <label class="weui_label">电话</label>
+                                    </div>
+                                    <div class="weui_cell_bd weui_cell_primary">
+                                        <input class="weui_input addteltxt" type="text" placeholder="电话"></div>
+                                </div>
+                                <div class="weui_cell">
+                                    <div class="weui_cell_hd">
+                                        <label class="weui_label">银行帐号</label>
+                                    </div>
+                                    <div class="weui_cell_bd weui_cell_primary">
+                                        <input class="weui_input addbanktxt" type="text" placeholder="银行帐号"></div>
+                                </div>
+                                <div class="weui_cell">
+                                    <div class="weui_cell_hd">
+                                        <label class="weui_label">支付宝</label>
+                                    </div>
+                                    <div class="weui_cell_bd weui_cell_primary">
+                                        <input class="weui_input addzfbtxt" type="text" placeholder="支付宝"></div>
+                                </div>
+                                <div class="weui_cell">
+                                    <div class="weui_cell_hd">
+                                        <label class="weui_label">微信号</label>
+                                    </div>
+                                    <div class="weui_cell_bd weui_cell_primary">
+                                        <input class="weui_input addwxtxt" type="text" placeholder="微信号"></div>
+                                </div>
+                            <a href="javascript:;" style="width: 80%;margin:20px auto" class="weui_btn weui_btn_primary addBtn">增加</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="tab3" class="weui_tab_bd_item">
+            <h1 class="main-title">我的</h1> 
+            <div class="weui_cells weui_cells_form">
+                <div class="weui_cell">
+                    <div class="weui_cell_hd"><label class="weui_label">帐号</label></div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input class="weui_input ownidtxt"  type="text" disabled >
+                    </div>
+                </div>
+                <div class="weui_cell">
+                    <div class="weui_cell_hd"><label class="weui_label">姓名</label></div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input class="weui_input ownnametxt" type="text" disabled >
+                    </div>
+                </div>
+                 <div class="weui_cell">
+                    <div class="weui_cell_hd"><label class="weui_label">电话</label></div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input class="weui_input ownteltxt"  type="text" disabled >
+                    </div>
+                </div>
+                <div class="weui_cell">
+                    <div class="weui_cell_hd"><label class="weui_label">银行</label></div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input class="weui_input ownbanktxt" type="text" disabled >
+                    </div>
+                </div>
+                <div class="weui_cell">
+                    <div class="weui_cell_hd"><label class="weui_label">支付宝</label></div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input class="weui_input ownzfbtxt" type="text" disabled >
+                    </div>
+                </div>
+                <div class="weui_cell">
+                    <div class="weui_cell_hd"><label class="weui_label">微信</label></div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input class="weui_input ownwxtxt"  type="text" disabled >
+                    </div>
+                </div>
+           
+                <div class="weui_cell">
+                    <div class="weui_cell_hd"><label class="weui_label">4圈房卡库存</label></div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input class="weui_input own4txt" type="text" value="0" disabled >
+                    </div>
+                </div>
+                <div class="weui_cell">
+                    <div class="weui_cell_hd"><label class="weui_label">8圈房卡库存</label></div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input  class="weui_input own8txt" type="text" value="0" disabled >
+                    </div>
+                </div>
+            </div>
+           <div class="weui-row">
+              <div class="weui-col-50 demos-cneter">累计销量：<span class="totaltxt">0</span>张</div>
+              <div class="weui-col-50 demos-cneter">今日销量：<span class="todaytxt">0</span>张</div>
+              <div class="weui-col-50 demos-cneter">本月销量：<span class="monthtxt">0</span>张</div>
+
+              <div class="weui-col-50 demos-cneter">总进卡：<span class="totaljintxt">0</span>张</div>
+              <div class="weui-col-50 demos-cneter">本月进卡：<span class="monthjintxt">0</span>张</div>
+              <div class="weui-col-50 demos-cneter">上月进卡：<span class="upmonthjintxt">0</span>张</div>
+            </div>
+            <a href="javascript:;" style="width: 80%;margin:20px 10% " class="weui_btn weui_btn_primary chongkaBtn">在线充值</a>
+            <div>
+                <div class="weui_panel">
+                    <div class="weui_panel_hd">充值记录</div>
+                    <div class="weui_panel_bd">
+                        <div class="weui_media_box weui_media_small_appmsg">
+                            <div class="weui_cells owmlists">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="weui-infinite-scroll owmlistscroll">
+                <div class="infinite-preloader"></div><!-- 菊花 -->
+                正在加载... <!-- 文案，可以自行修改 -->
+            </div>
+        </div>
+        <div id="tab4" class="weui_tab_bd_item">
+            <h1 class="main-title">充卡</h1>
+            <div class="weui_cells weui_cells_form">
+                <div class="weui_cell weui_cell_select">
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <select class="weui_select fangkatype" name="select1">
+                            <option value="roundtype_4">4圈房卡</option>
+                            <option value="roundtype_8">8圈房卡</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="weui_cell">
+                    <div class="weui_cell_hd"><label class="weui_label">数量</label></div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input class="weui_input numtxt" type="number"  >
+                    </div>
+                </div>
+            </div>
+            <a href="javascript:;" style="width: 80%;margin-top:50px " class="weui_btn weui_btn_primary tijiaoBtn">提交</a>
+        </div>
+        <div id="tab5" class="weui_tab_bd_item">
+            <p class="main-title">玩家管理</p>
+            <div class="demos-cneter">
+                <div class="goukapaihangBtn">
+                    <a href="javascript:;" class="weui_btn weui_btn_primary weui_btn_mini ">玩家购卡排行榜</a>       
+                </div>
+                <div class="kaifangpaihangBtn">
+                    <a href="javascript:;" class="weui_btn weui_btn_primary weui_btn_mini ">玩家开房排行榜</a>       
+                </div>
+                <div hidden class="wanjiaguanliBtn">
+                    <a href="javascript:;" class="weui_btn weui_btn_primary weui_btn_mini " >玩家管理</a>         
+                </div>
+            </div>
+            <div>
+                <div class="weui_panel wanjiaguanlidiv">
+                    <h5>玩家管理</h5>
+                    <div class="weui_panel_hd"> 
+                        <div class="weui-row touwanjiadiv">
+                            <div class="weui-col-50">玩家id</div>
+                            <div class="weui-col-50">真实姓名</div>
+                        </div>
+                        <div class="weui-row touadminwanjiadiv" >
+                            <div class="weui-col-20">玩家id</div>
+                            <div class="weui-col-30">真实姓名</div>
+                            <div class="weui-col-50">真实姓名</div>
+                        </div>
+                    </div>
+                    <div class="weui_panel_bd">
+                        <div class="weui_media_box weui_media_small_appmsg">
+                            <div class="weui_cells playersDiv">
+                                   
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="weui_panel goukapaihangdiv" hidden="">
+                    <h5>玩家购卡排行榜</h5>
+                    <div class="weui_panel_hd">
+                        <div class="weui-row">
+                            <div class="weui-col-33">玩家id</div>
+                            <div class="weui-col-33">真实姓名</div>
+                            <div class="weui-col-33">购卡数</div>
+                        </div>
+                    </div>
+                    <div class="weui_panel_bd">
+                        <div class="weui_media_box weui_media_small_appmsg">
+                            <div class="weui_cells playerpaihangDiv">
+                                <div class="weui_cell">
+                                    <div class="weui_cell_bd weui_cell_primary">
+                                      
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="weui_panel kaifangpaihangdiv" hidden="">
+                    <h5>玩家开房排行榜</h5>
+                    <div class="weui_panel_hd">
+                        <div class="weui-row">
+                            <div class="weui-col-33">玩家id</div>
+                            <div class="weui-col-33">真实姓名</div>
+                            <div class="weui-col-33">开房数</div>
+                        </div>
+                    </div>
+                    <div class="weui_panel_bd">
+                        <div class="weui_media_box weui_media_small_appmsg">
+                            <div class="weui_cells kaifangDiv">
+                                <div class="weui_cell">
+                                    <div class="weui_cell_bd weui_cell_primary">
+                                       <div class="weui-row">
+                                          <div class="weui-col-33">123</div>
+                                          <div class="weui-col-33">123</div>
+                                          <div class="weui-col-33">20</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="tab6" class="weui_tab_bd_item">
+            <p class="main-title">售卡排行</p>
+            <div class="demos-cneter">
+                <div class="jinriBtn" hidden>
+                    <a href="javascript:;" class="weui_btn weui_btn_primary weui_btn_mini ">今日排行</a>       
+                </div>
+                <div  class="benyueBtn">
+                    <a href="javascript:;" class="weui_btn weui_btn_primary weui_btn_mini " style="background-color: red">本月排行</a>       
+                </div>
+            </div>
+            <div>
+                <div class="weui_panel jinridiv">
+                    <h5>今日排行</h5>
+                    <div class="weui_panel_hd"> 
+                        <div class="weui-row">
+                            <div class="weui-col-50">名称</div>
+                            <div class="weui-col-50">售卡</div>
+                        </div>
+                    </div>
+                    <div class="weui_panel_bd">
+                        <div class="weui_media_box weui_media_small_appmsg">
+                            <div class="weui_cells dateskdiv">
+                                   <div class="weui_cell">
+                                    <div class="weui_cell_bd weui_cell_primary">
+                                       <div class="weui-row">
+                                          <div class="weui-col-50">123</div>
+                                          <div class="weui-col-50">123</div>
+                                        </div>
+                                    </div>
+                                  </div>
+                                  <div class="weui_cell">
+                                    <div class="weui_cell_bd weui_cell_primary">
+                                       <div class="weui-row">
+                                          <div class="weui-col-50">123</div>
+                                          <div class="weui-col-50">123</div>
+                                        </div>
+                                    </div>
+                                  </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                 <div class="weui_panel benyuediv" hidden="">
+                    <h5>本月排行</h5>
+                    <div class="weui_panel_hd">
+                        <div class="weui-row">
+                            <div class="weui-col-50">名称</div>
+                            <div class="weui-col-50">售卡</div>
+                        </div>
+                    </div>
+                    <div class="weui_panel_bd">
+                        <div class="weui_media_box weui_media_small_appmsg">
+                            <div class="weui_cells monthskdiv">
+                                <div class="weui_cell">
+                                    <div class="weui_cell_bd weui_cell_primary">
+                                       <div class="weui-row">
+                                          <div class="weui-col-50">123</div>
+                                          <div class="weui-col-50">123</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="tab7" class="weui_tab_bd_item">
+            <h1 class="main-title">代理信息</h1> 
+            <div class="weui_cells weui_cells_form">
+                <div class="weui_cell">
+                    <div class="weui_cell_hd"><label class="weui_label">帐号</label></div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input class="weui_input dailiownidtxt"  type="text" disabled >
+                    </div>
+                </div>
+                <div class="weui_cell">
+                    <div class="weui_cell_hd"><label class="weui_label">姓名</label></div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input class="weui_input dailiownnametxt" type="text" disabled >
+                    </div>
+                </div>
+                 <div class="weui_cell">
+                    <div class="weui_cell_hd"><label class="weui_label">电话</label></div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input class="weui_input dailiownteltxt"  type="text" disabled >
+                    </div>
+                </div>
+                <div class="weui_cell">
+                    <div class="weui_cell_hd"><label class="weui_label">银行</label></div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input class="weui_input dailiownbanktxt" type="text" disabled >
+                    </div>
+                </div>
+                 <div class="weui_cell">
+                    <div class="weui_cell_hd"><label class="weui_label">微信</label></div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input class="weui_input dailiownwxtxt"  type="text" disabled >
+                    </div>
+                </div>
+           
+                <div class="weui_cell">
+                    <div class="weui_cell_hd"><label class="weui_label">4圈房卡库存</label></div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input class="weui_input dailiown4txt" type="text" value="0" disabled >
+                    </div>
+                </div>
+                <div class="weui_cell">
+                    <div class="weui_cell_hd"><label class="weui_label">8圈房卡库存</label></div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input  class="weui_input dailiown8txt" type="text" value="0" disabled >
+                    </div>
+                </div>
+            </div>
+           <div class="weui-row">
+              <div class="weui-col-50 demos-cneter">累计销量：<span class="dailitotaltxt">0</span> 张</div>
+              <div class="weui-col-50 demos-cneter">今日销量：<span class="dailitodaytxt">0</span>张</div>
+              <div class="weui-col-50 demos-cneter">本月销量：<span class="dailimonthtxt">0</span>张</div>
+
+              <div class="weui-col-50 demos-cneter">总进卡：<span class="dailitotaljintxt">0</span>张</div>
+              <div class="weui-col-50 demos-cneter">本月进卡：<span class="dailimonthjintxt">0</span>张</div>
+              <div class="weui-col-50 demos-cneter">上月进卡：<span class="dailiupmonthjintxt">0</span>张</div>
+            </div>
+        </div>
+    </div>
+    <div class="weui_tabbar">
+        <a href="#tab1" class="weui_tabbar_item weui_bar_item_on">
+            <div class="weui_tabbar_icon">
+                <i class="weui_icon_success_circle"></i>
+            </div>
+            <p class="weui_tabbar_label">首页</p>
+        </a>
+        <a href="#tab2" class="weui_tabbar_item tab2"  >
+            <div class="weui_tabbar_icon">
+                <i class="weui_icon_waiting"></i>
+            </div>
+            <p class="weui_tabbar_label">代理管理</p>
+        </a>
+        
+        <a href="#tab4"  class="weui_tabbar_item tab4" >
+            <div class="weui_tabbar_icon">
+                <i class="weui_icon_info_circle"></i>
+            </div>
+            <p class="weui_tabbar_label">充卡</p>
+        </a>
+        <a href="#tab5"  class="weui_tabbar_item tab5" >
+            <div class="weui_tabbar_icon">
+               <i class="weui_icon_warn"></i>
+            </div>
+            <p class="weui_tabbar_label">玩家管理</p>
+        </a>
+        <a href="#tab6"  class="weui_tabbar_item tab6" >
+            <div class="weui_tabbar_icon">
+                <i class="weui_icon_download"></i>
+            </div>
+            <p class="weui_tabbar_label">售卡排行</p>
+        </a>
+        <a href="#tab3"  class="weui_tabbar_item tab3">
+            <div class="weui_tabbar_icon">
+                <i class="weui_icon_info_circle"></i>
+            </div>
+            <p class="weui_tabbar_label">我</p>
+        </a>
+        <a href="#tab7"  class="weui_tabbar_item tab7">
+            <div class="weui_tabbar_icon">
+                <i class="weui_icon_info_circle"></i>
+            </div>
+            <p class="weui_tabbar_label">代理信息</p>
+        </a>
+    </div>
+</div>
+<div id="agentck" class="weui-popup-container popup-bottom">
+  <div class="weui-popup-overlay"></div>
+  <div class="weui-popup-modal">
+        <h1 class="main-title agentname">充卡</h1>
+        <div class="weui_cells weui_cells_form">
+            <div class="weui_cell weui_cell_select">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <select class="weui_select agentfangkatype" name="select1">
+                        <option value="roundtype_4">4圈房卡</option>
+                        <option value="roundtype_8">8圈房卡</option>
+                    </select>
+                </div>
+            </div>
+            <div class="weui_cell">
+                <div class="weui_cell_hd"><label class="weui_label">数量</label></div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <input class="weui_input agentnumtxt" type="number"  >
+                </div>
+            </div>
+            <a href="javascript:;" style="width: 80%;margin-top:50px " class="weui_btn weui_btn_primary agenttijiaoBtn">提交</a>
+        </div>
+        <h1>&nbsp;</h1>
+        <h1>&nbsp;&nbsp;</h1>
+        <h1>&nbsp;</h1>
+  </div>
+</div>
+<script src="static/lib/jquery-2.1.4.js"></script>
+<script src="static/lib/fastclick.js"></script>
+<script>
+    $(function() {
+        FastClick.attach(document.body);
+    });
+</script>
+<script src="static/js/jquery-weui.js"></script>
+<!-- <script src="main.js">
+
+</script> -->
+</body>
+</html>
