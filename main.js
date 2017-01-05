@@ -1,4 +1,5 @@
- var httpurl="http://139.129.235.232:8080/majiang/";
+ // var httpurl="http://139.129.235.232:8080/majiang/";
+ var httpurl="http://180.76.173.116:8080/majiang/";
     var token="";
     var user;
     var goods;
@@ -12,13 +13,13 @@
             $(".adddailiBtn").hide();
             $(".adddailidiv").show();
             $(".dailiguanlidiv").hide();
-        })
+        });
         $(".dailiguanliBtn").click(function () {
             $(".dailiguanliBtn").hide();
             $(".adddailiBtn").show();
             $(".adddailidiv").hide();
             $(".dailiguanlidiv").show();
-        })
+        });
         $(".goukapaihangBtn").click(function () {
             $(".goukapaihangBtn").hide();
             $(".goukapaihangdiv").show();
@@ -30,7 +31,7 @@
                 $(".kaifangpaihangdiv").hide();
                 $(".kaifangpaihangBtn").show();
             }
-        })
+        });
         $(".wanjiaguanliBtn").click(function () {
             $(".wanjiaguanliBtn").hide();
             $(".wanjiaguanlidiv").show();
@@ -43,7 +44,7 @@
                 $(".kaifangpaihangdiv").hide();
                 $(".kaifangpaihangBtn").show();
             }
-        })
+        });
         $(".kaifangpaihangBtn").click(function () {
             $(".wanjiaguanliBtn").show();
             $(".wanjiaguanlidiv").hide();
@@ -53,19 +54,19 @@
             
             $(".kaifangpaihangdiv").show();
             $(".kaifangpaihangBtn").hide();
-        })
+        });
         $(".benyueBtn").click(function () {
             $(".benyuediv").show();
             $(".jinridiv").hide();
             $(".jinriBtn").show();
             $(".benyueBtn").hide();
-        })
+        });
         $(".jinriBtn").click(function () {
             $(".benyuediv").hide();
             $(".jinridiv").show();
             $(".jinriBtn").hide();
             $(".benyueBtn").show();
-        })
+        });
         //登录
         $(".loginBtn").click(function () {
             $.showLoading("正在登录...");
@@ -85,6 +86,7 @@
                         if(user.groups!="s")
                         {
 
+                            $(".guangbodiv").remove();
                             $(".tab4").remove();
                             $(".chongkaBtn").remove();
                             $(".tab2").remove();
@@ -129,10 +131,10 @@
                     $.toptip('连接不上服务器', 'error');
                 }
             });
-        })
-        // $(".loginidtxt").val("")
-        // $(".loginpwdtxt").val("")
-        // $(".loginBtn").click();
+        });
+        $(".loginidtxt").val("admin")
+        $(".loginpwdtxt").val("maqingze5588")
+        $(".loginBtn").click();
         //增加代理
         $(".addBtn").click(function () {
             if($(".addidtxt").val()==""||$(".addpwdtxt").val()==""||$(".addnametxt").val()==""||$(".addwxtxt").val()==""||$(".addbanktxt").val()==""||$(".addteltxt").val()=="")
@@ -166,11 +168,11 @@
                 error: function () {   $.hideLoading();
                     $.toptip('连接不上服务器', 'error'); }
             });
-        })
+        });
         //充卡界面
         $(".chongkaBtn").click(function () {
             $(".tab4").click();
-        })
+        });
         //充卡
         $(".tijiaoBtn").click(function () {
             if($(".numtxt").val()=="")
@@ -199,7 +201,7 @@
                 error: function () {   $.hideLoading();
                     $.toptip('连接不上服务器', 'error'); }
             });
-        })
+        });
         //玩家充卡
         $(".userchongBtn").click(function () {
             if($(".useridtxt").val()==""||$(".usernumtxt").val()=="")
@@ -260,7 +262,7 @@
                                         delcard($(".usertype").val(),$(".usernumtxt").val());
                                         $(".useridtxt").val("");
                                         $(".usernumtxt").val("");
-                                        initdata()
+                                        initdata();
                                     }else
                                     {
                                         $.toast(info.msg, 'forbidden');
@@ -280,7 +282,7 @@
             });
            
             
-        })
+        });
         //搜索
         $(".suosou").click(function () {
             if($(".searchbizidtxt").val()=="")
@@ -322,7 +324,7 @@
                         $.toptip('连接不上服务器', 'error'); }
             });
            
-        })
+        });
         //搜索
         $(".agenttijiaoBtn").click(function () {
             if($(".agentnumtxt").val()=="")
@@ -349,8 +351,53 @@
                     $.toptip('连接不上服务器', 'error'); }
             });
            
-        })
-    })
+        });
+
+        //修改代理
+        $(".updateagentBtn").click(function () {
+            $.ajax({ type: "post",
+                url:httpurl+"admin/updateAgent",
+                data:"id="+$(".dailiownidtxt").val()+"&pwd="+$(".dailiownowdtxt").val()+"&name="+$(".dailiownnametxt").val()+"&token="+token+
+                        "&weixin="+$(".dailiownwxtxt").val()+"&bank="+$(".dailiownbanktxt").val()+"&phone="+$(".dailiownteltxt").val()+"&zhifubao="+$(".dailiownzhifubaotxt").val(),
+                success:function(info){
+                    $.hideLoading();
+                    if(info.code == "000000")
+                    {
+                        $.toast("修改成功！", 'success');
+                    }else
+                    {
+                        $.toptip(info.msg, 'error');
+                    }
+                },
+                error: function () {   $.hideLoading();
+                    $.toptip('连接不上服务器', 'error'); }
+            });
+           
+        });
+        //广播信息
+        $(".guangboBtn").click(function () {
+            $.ajax({ type: "post",
+                url:httpurl+"admin/push",
+                data:"msg="+$(".guangbotxt").val()+"&token="+token,
+                success:function(info){
+                    $.hideLoading();
+                    if(info.code == "000000")
+                    {
+                        $.toast("广播成功！", 'success');
+                    }else
+                    {
+                        $.toptip(info.msg, 'error');
+                    }
+                },
+                error: function () {   $.hideLoading();
+                    $.toptip('连接不上服务器', 'error'); }
+            });
+           
+        });
+
+
+
+    });
     
     function initdata(){
         getcardlist();
@@ -370,7 +417,7 @@
 
             $(".touadminwanjiadiv").remove();
         }
-    }
+    };
     //查询开房排行榜
     function getUseCards() 
     {
@@ -399,7 +446,7 @@
             error: function () {   $.hideLoading();
                 $.toptip('连接不上服务器', 'error'); }
         });
-    }
+    };
     //如果是admin就加载所有的玩家到玩家列表
     function getUserList() 
     {
@@ -428,7 +475,7 @@
             error: function () {   $.hideLoading();
                 $.toptip('连接不上服务器', 'error'); }
         });
-    }
+    };
     //zijid zong ka shu
     function getowntotal() 
     {
@@ -445,7 +492,7 @@
             error: function () {   $.hideLoading();
                 $.toptip('连接不上服务器', 'error'); }
         });
-    }
+    };
     function getownmonth() 
     {
         $.ajax({ type: "post",
@@ -461,7 +508,7 @@
             error: function () {   $.hideLoading();
                 $.toptip('连接不上服务器', 'error'); }
         });
-    }
+    };
     function getowntoday() 
     {
         $.ajax({ type: "post",
@@ -477,7 +524,7 @@
             error: function () {   $.hideLoading();
                 $.toptip('连接不上服务器', 'error'); }
         });
-    }
+    };
     //shoukapaihang--------------------------
     function getdatesklist()
     {
@@ -516,7 +563,7 @@
             error: function () {   $.hideLoading();
                 $.toptip('连接不上服务器', 'error'); }
         });
-    }
+    };
     function getmonthsklist()
     {
         $.showLoading("正在加载数据...");
@@ -554,7 +601,7 @@
             error: function () {   $.hideLoading();
                 $.toptip('连接不上服务器', 'error'); }
         });
-    }
+    };
     //daili--------------------------
     function getAgentList()
     {
@@ -577,7 +624,7 @@
             error: function () {   $.hideLoading();
                 $.toptip('连接不上服务器', 'error'); }
         });
-    }
+    };
     function setdaililist()
     {
         $(".daililistDiv").children().remove();
@@ -614,7 +661,7 @@
                 }
             $(".daililistDiv").append(div);
         }
-    }
+    };
       //查选代理
     function onSeachdaili(o){
         console.log("wwww")
@@ -628,10 +675,13 @@
                    // $.alert("本月售卡:"+info.sale[0].num+"张  ;  上卡:"
                    //  +info.buy[0].num+"张","玩家："+info.agent.name+"  ;  id:"+info.agent.id)
                     $(".dailiownidtxt").val(info.agent.id);
+                    $(".dailiownowdtxt").val(info.agent.pwd);
                     $(".dailiownnametxt").val(info.agent.name);
                     $(".dailiownteltxt").val(info.agent.phone);
                     $(".dailiownbanktxt").val(info.agent.bank);
                     $(".dailiownwxtxt").val(info.agent.weixin);
+                    $(".dailiownzhifubaotxt").val(info.agent.zhifubao);
+
                     var goods=info.agent.goods;
                     if(goods.length)
                     {
@@ -747,7 +797,7 @@
             error: function () {   $.hideLoading();
                 $.toptip('连接不上服务器', 'error'); }
         });
-    }
+    };
       //冻结
     function onFreeze(o){
         console.log("wwww")
@@ -758,7 +808,7 @@
           //点击取消后的回调函数
         });
         return false;
-    }
+    };
     function sendfreeze(num,id)
     {
         // http://180.76.173.116:8080/majiang/admin/freeze?id=333&freeze=0&token=admin1477410458765   freeze冻结1  解冻0
@@ -776,7 +826,7 @@
                 $.toptip('连接不上服务器', 'error'); 
             }
         });
-    }
+    };
       //解冻
     function onRemovefreeze(o){
         $.confirm("确定要解除冻结代理:"+o.getAttribute("name"), function() {
@@ -785,7 +835,7 @@
           //点击取消后的回调函数
         });
         return false;
-    }
+    };
     var dailiname="";
     //代理充卡
     function onAgentChongka(o){
@@ -793,7 +843,7 @@
         $("#agentck").popup();
         $(".agentname").text('为代理<'+o.getAttribute("name")+'>充卡');
         return false;
-    }
+    };
 
     
     // wanjia--------------------------ss
@@ -822,7 +872,7 @@
             error: function () {   $.hideLoading();
                 $.toptip('连接不上服务器', 'error'); }
         });
-    }
+    };
     function setplayerlist()
     {
         $(".playersDiv").children().remove();
@@ -859,7 +909,7 @@
               
             $(".playerpaihangDiv").append(div);
         }
-    }
+    };
     // chongzhijilu-------------------
     function getcardlist()
     {
@@ -903,7 +953,7 @@
             error: function () {   $.hideLoading();
                 $.toptip('连接不上服务器', 'error'); }
         });
-    }
+    };
     function setjinka(){
         var k=owmlist.length;
         var totolnum=0;
@@ -927,7 +977,7 @@
         $(".monthjintxt").text(monthnum);
         $(".upmonthjintxt").text(todaynum);
 
-    }
+    };
     function setList(){
         $(".owmlists").children().remove();
         $(".userlists").children().remove();
@@ -987,21 +1037,21 @@
         {
             $(".userlistscroll").remove();
         }
-    }
+    };
     function addList(type,num){
          var leixing=type=="roundtype_4"?"四圈房卡":"八圈房卡"
             var div='<div class="weui_cell"><div class="weui_cell_bd weui_cell_primary"><p>数量:'+num+'</p>'+
                     '  <p>类型:'+leixing+'</p>'+
                 '</div><div class="weui_cell_ft">'+CurentTime()+'</div></div>'
             $(".owmlists").prepend(div);
-    }
+    };
     function adduserList(type,num,bizid){
         var leixing=type=="roundtype_4"?"四圈房卡":"八圈房卡"
         var div='<div class="weui_cell"><div class="weui_cell_bd weui_cell_primary"><p>玩家id:'+bizid+'</p><p>数量:'+num+'</p>'+
                 '  <p>类型:'+leixing+'</p>'+
                 '</div><div class="weui_cell_ft">'+CurentTime()+'</div></div>';
         $(".userlists").prepend(div);
-    }
+    };
     function addcard(type,num)
     {
         if(type=="roundtype_4")
@@ -1012,7 +1062,7 @@
              var sunm=Number($(".own8txt").val())+Number(num);
             $(".own8txt").val(sunm);
         }
-    }
+    };
     function delcard(type,num)
     {
         if(type=="roundtype_4")
@@ -1023,7 +1073,7 @@
              var sunm=Number($(".own8txt").val())-Number(num);
             $(".own8txt").val(sunm);
         }
-    }
+    };
     function CurentTime()
     { 
         var now = new Date();
@@ -1061,7 +1111,7 @@
             clock += '0'; 
         clock += ss; 
         return(clock); 
-    } 
+    } ;
 
     function todayTime()
     { 
@@ -1082,7 +1132,7 @@
            
         clock += day + " "+"00:00:00";
         return(clock); 
-    } 
+    } ;
     function monthTime()
     { 
         var now = new Date();
@@ -1096,7 +1146,7 @@
         clock += month + "/";
         clock += "01" + " "+"00:00:00";
         return(clock); 
-    } 
+    } ;
 
 
     function upmonthTime()
@@ -1119,7 +1169,7 @@
        
         clock += month;
         return(clock); 
-    } 
+    }; 
     function hengmonthTime()
     { 
         var now = new Date();
@@ -1131,4 +1181,4 @@
             clock += "0";
         clock += month;
         return(clock); 
-    } 
+    } ;
