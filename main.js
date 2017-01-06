@@ -1,10 +1,9 @@
- // var httpurl="http://139.129.235.232:8080/majiang/";
- var httpurl="http://180.76.173.116:8080/majiang/";
+ var httpurl="http://139.129.235.232:8080/majiang/";
     var token="";
     var user;
     var goods;
     var owmlist=[],userlist=[],playerslist=[],daililist=[],datesklist=[],monthsklist=[];
-
+    var storage = window.localStorage; 
     $(function () {
         $(".tab4").hide();
         $(".tab7").hide();
@@ -77,6 +76,19 @@
                     $.hideLoading();
                     if(info.code == "000000")
                     {
+                        if($("#weuiAgree").is(':checked')) 
+                        { 
+                           //存储到loaclStage   
+                           storage["majiangname"] = $(".loginidtxt").val(); 
+                           storage["majiangpassword"] =  $(".loginpwdtxt").val(); 
+                           storage["isstorePwd"] =  "yes"; 
+                        } 
+                        else 
+                        { 
+                           storage["majiangname"] = $(".loginidtxt").val(); 
+                           storage["majiangpassword"] =  ""; 
+                           storage["isstorePwd"] =  "no"; 
+                        } 
                         token=info.token;
                         user=info.user;
                         goods=info.goods;
@@ -132,9 +144,13 @@
                 }
             });
         });
-        $(".loginidtxt").val("admin")
-        $(".loginpwdtxt").val("maqingze5588")
-        $(".loginBtn").click();
+
+        $(".loginidtxt").val(storage["majiangname"])
+        if(storage["isstorePwd"]=="yes")
+        {
+            $(".loginpwdtxt").val(storage["majiangpassword"])
+            $('#weuiAgree').attr('checked',"checked")
+        }
         //增加代理
         $(".addBtn").click(function () {
             if($(".addidtxt").val()==""||$(".addpwdtxt").val()==""||$(".addnametxt").val()==""||$(".addwxtxt").val()==""||$(".addbanktxt").val()==""||$(".addteltxt").val()=="")
