@@ -25,11 +25,11 @@
 
             $(".wanjiaguanlidiv").hide();
             $(".wanjiaguanliBtn").show();
-            if(user.id=="admin")
-            {
+            // if(user.id=="admin")
+            // {
                 $(".kaifangpaihangdiv").hide();
                 $(".kaifangpaihangBtn").show();
-            }
+            // }
         });
         $(".wanjiaguanliBtn").click(function () {
             $(".wanjiaguanliBtn").hide();
@@ -38,11 +38,11 @@
             $(".goukapaihangBtn").show();
             $(".goukapaihangdiv").hide();
 
-            if(user.id=="admin")
-            {
+            // if(user.id=="admin")
+            // {
                 $(".kaifangpaihangdiv").hide();
                 $(".kaifangpaihangBtn").show();
-            }
+            // }
         });
         $(".kaifangpaihangBtn").click(function () {
             $(".wanjiaguanliBtn").show();
@@ -102,7 +102,7 @@
                             $(".tab4").remove();
                             $(".chongkaBtn").remove();
                             $(".tab2").remove();
-                            $(".kaifangpaihangBtn").remove();
+                            // $(".kaifangpaihangBtn").remove();
                         }
                         $(".ownidtxt").val(user.id);
                         $(".ownnametxt").val(user.name);
